@@ -1,6 +1,7 @@
 {
   inputs,
-  poetry2Nix ? inputs.poetry2Nix.packages.default,
+  pkgs,
+  poetry2Nix ? inputs.poetry2Nix.packages.${pkgs.system}.default,
   lib,
   fetchFromGitHub,
 }:
@@ -13,9 +14,9 @@ poetry2Nix.mkPoetryApplication {
   };
   meta = with lib; {
     description = "Fabric is a python widgets thing framework made for *Nix based systems (Wayland and X11), using GTK+.";
-    homepage = "https://github.com/Fabric-Development/Fabric";
+    homepage = "https://github.com/Fabric-Development/fabric";
     maintainers = with maintainers; [darumaka];
-    mainProgram = "mixxc";
+    mainProgram = "fabric";
     platforms = platforms.linux;
   };
 }
