@@ -1,22 +1,48 @@
 {
-  inputs,
-  pkgs,
-  poetry2Nix ? inputs.poetry2Nix.packages.${pkgs.system}.default,
   lib,
+  pkgs,
+  python3Packages,
   fetchFromGitHub,
+  gtk3,
+  cairo,
+  gtk-layer-shell,
+  gobject-introspection,
+  pip ? pkgs.python3Packages.pip,
+  psutil ? pkgs.python3Packages.psutil,
+  pygobject3 ? pkgs.python3Packages.pygobject3,
+  pycairo ? pkgs.python3Packages.pycairo,
+  loguru ? pkgs.python3Packages.loguru,
+  click ? pkgs.python3Packages.click,
+  pkgconf,
 }:
-poetry2Nix.mkPoetryApplication {
-  projectDir = fetchFromGitHub {
-    owner = "Fabric-Development";
-    repo = "fabric";
-    rev = "9adb28d7659d9068ff05f1410767334608fa4095";
-    hash = "sha256-U9lA+nht23tXoSredZEnXOzW/lTH0rr29nQF5zP9eEo=";
-  };
-  meta = with lib; {
-    description = "Fabric is a python widgets thing framework made for *Nix based systems (Wayland and X11), using GTK+.";
-    homepage = "https://github.com/Fabric-Development/fabric";
-    maintainers = with maintainers; [darumaka];
-    mainProgram = "fabric";
-    platforms = platforms.linux;
-  };
-}
+with python3Packages;
+  buildPythonApplication {
+    pname = "fabric";
+    version = "0.0.1";
+    src = fetchFromGitHub {
+      owner = "Fabric-Development";
+      repo = "fabric";
+      rev = "9adb28d7659d9068ff05f1410767334608fa4095";
+      hash = "sha256-U9lA+nht23tXoSredZEnXOzW/lTH0rr29nQF5zP9eEo=";
+    };
+    propagatedBuildInputs = [
+      gtk3
+      cairo
+      gtk-layer-shell
+      gobject-introspection
+      pip
+      pygobject3
+      pycairo
+      loguru
+      click
+      psutil
+      pkgconf
+    ];
+    meta = with lib; {
+      description = "Fabric is a python widgets thing framework made for *Nix based systems (Wayland and X11), using GTK+.";
+      homepage = "https://github.com/Fabric-Development/";
+      maintainers = with maintainers; [darumaka];
+      mainProgram = "mixxc";
+      platforms = platforms.linux;
+    };
+  }
