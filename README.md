@@ -2,12 +2,17 @@
 
 My custom flake repo with a few packages I use that aren't found in the nixpkgs repo.
 
-Works:
+## Available packages
 
-- Pokeshell
-- Bridge
-- Mixxc
+- Bridge editor
+- gh-s
+- gh-download
+- mangayomi(broken)
+- pokeshell
+- fabric (broken)
+- lexido
+- zaread
 
-Doesn't work
+## TODO
 
-- Fabric
+- Add cachix pushing
