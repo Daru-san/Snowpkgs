@@ -1,10 +1,47 @@
-{appimageTools, ...}: let
-  version = "2.7.10";
-in
-  appimageTools.wrapType2 {
-    name = "bridge-core";
-    src = builtins.fetchurl {
-      url = "https://github.com/bridge-core/editor/releases/download/v${version}/bridge_${version}_amd64.AppImage";
-      sha256 = "0m68xkj7fw3kqx9wrsnip2sk0k9jyd5zm1zrpmr5ar5c2y11s9z6";
-    };
-  }
+{
+  lib,
+  stdenv,
+  fetchurl,
+  dpkg,
+  wrapGAppsHook4,
+  autoPatchelfHook,
+  webkitgtk,
+}:
+stdenv.mkDerivation rec {
+  pname = "bridge-editor";
+  version = "2.7.17";
+
+  src = fetchurl {
+    url = "https://github.com/bridge-core/editor/releases/download/v${version}/bridge_${version}_amd64.deb";
+    hash = "sha256-JqOrhJWBAioKoA6XqUGy5B05nXjti23g2cg0DkBoo44=";
+  };
+
+  nativeBuildInputs = [
+    dpkg
+    wrapGAppsHook4
+    autoPatchelfHook
+  ];
+
+  buildInputs = [
+    webkitgtk
+  ];
+  unpackPhase = "true";
+
+  # Extract and copy executable in $out/bin
+  installPhase = ''
+    mkdir -p $out
+    dpkg -x $src $out
+    cp -av $out/usr/* $out
+    rm -rf $out/usr
+  '';
+
+  meta = with lib; {
+    description = "A lightweight IDE for Minecraft Add-Ons";
+    homepage = "https://github.com/bridge-core/editor";
+    platforms = ["x86_64-linux"];
+    license = licenses.gpl3Plus;
+    sourceProvenance = with sourceTypes; [binaryNativeCode];
+    maintainers = with maintainers; [daru-san];
+    mainProgram = "bridge";
+  };
+}
