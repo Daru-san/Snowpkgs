@@ -12,7 +12,7 @@ buildGoModule rec {
     rev = "v${version}";
     hash = "sha256-7T/5lWMjpzVGNqKBWcJ/Ux7rhtjIepz/a+aWmB8Z+Do=";
   };
-  vendorHash = "sha256-voVoowjM90OGWXF4REEevO8XEzT7azRYiDay4bnGBks=";
+  vendorHash = "sha256-2FsGCCWRHllHowl6T0Nhp/KZfwNNe/3IL6PsMWzbiHI=";
   meta = with lib; {
     description = "An innovative assistant for the command line";
     homepage = "https://github.com/micr0-dev/lexido";
