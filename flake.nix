@@ -1,15 +1,31 @@
 {
-  description = "A flake for packages I use that aren't packaged in nixpkgs";
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    snowfall-lib = {
-      url = "github:snowfallorg/lib";
-      inputs.nixpkgs.follows = "nixpkgs";
+  description = "The packages I use that have not been upstreamed to nixpks";
+
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+  outputs = {
+    self,
+    nixpkgs,
+  }: let
+    genSystems = nixpkgs.lib.genAttrs [
+      "x86_64-linux"
+      "aarch64-linux"
+    ];
+    pkgsFor = nixpkgs.legacyPackages;
+  in {
+    overlays.default = _: prev: {
+      bridge-editor = prev.callPackage ./packages/bridge {};
+      gh-s = prev.callPackage ./packages/gh-s {};
+      gh-download = prev.callPackage ./packages/gh-download {};
+      fabric = prev.callPackage ./packages/fabric {};
+      pokeshell = prev.callPackage ./packages/pokeshell {};
+      zaread = prev.callPackage ./packages/zaread {};
+      lexido = prev.callPackage ./packages/lexido {};
+      mangayomi = prev.callPackage ./packages/mangayomi {};
     };
+
+    packages = genSystems (system: self.overlays.default null pkgsFor.${system});
+
+    formatter = genSystems (system: pkgsFor.${system}.alejandra);
   };
-  outputs = inputs:
-    inputs.snowfall-lib.mkFlake {
-      inherit inputs;
-      src = ./.;
-    };
 }
