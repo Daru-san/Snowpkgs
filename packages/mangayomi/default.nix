@@ -1,38 +1,59 @@
 {
   stdenv,
   lib,
-  fetchzip,
+  fetchurl,
   autoPatchelfHook,
   mpv,
+  unzip,
+  gtk3,
+  pango,
+  cairo,
+  flutter,
+  wrapGAppsHook4,
+  jre_minimal,
 }:
 stdenv.mkDerivation rec {
   pname = "mangayomi";
-  version = "0.2.2";
+  version = "0.2.45";
 
-  src = fetchzip {
+  src = fetchurl {
     url = "https://github.com/kodjodevf/mangayomi/releases/download/v${version}/Mangayomi-v${version}-linux.zip";
-    hash = "sha256-4CkijAlenhht8tyk3nBULaBPE0GBf6DVII699/RmmWI=";
+    hash = "sha256-ewU4sbI2aaKhQ42y7escC71elSlrtGrSy66eemrV8wE=";
   };
-
+  dontUnpack = true;
   nativeBuildInputs = [
     autoPatchelfHook
+    unzip
+    wrapGAppsHook4
   ];
 
-  buildInputs = [
+  builtInputs = [
+    gtk3
+    jre_minimal
+    pango
+    cairo
+    flutter
+  ];
+  runtimeDependencies = [
     mpv
   ];
 
   sourceRoot = ".";
 
   installPhase = ''
-    runHook preInstall
+    mkdir -p $out
+    unzip $src
+    cp -avr lib $out/lib
     install -m755 -D mangayomi $out/bin/mangayomi
-    runHook postInstall
   '';
 
   meta = with lib; {
-    homepage = "https://studio-link.com";
-    description = "Voip transfer";
-    platforms = platforms.linux;
+    description = "Manga reader and anime streamer";
+    homepage = "https://github.com/kodjodevf/mangayomi";
+    platforms = ["x86_64-linux"];
+    license = licenses.gpl3Plus;
+    sourceProvenance = with sourceTypes; [binaryNativeCode];
+    maintainers = with maintainers; [daru-san];
+    mainProgram = "mangayomi";
   };
 }
