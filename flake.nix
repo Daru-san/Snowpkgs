@@ -22,6 +22,7 @@
       zaread = prev.callPackage ./packages/zaread {};
       lexido = prev.callPackage ./packages/lexido {};
       mangayomi = prev.callPackage ./packages/mangayomi {};
+      git-nautilus-icons = prev.callPackage ./packages/git-nautilus-icons {};
     };
 
     packages = genSystems (system: self.overlays.default null pkgsFor.${system});
