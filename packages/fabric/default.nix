@@ -36,8 +36,8 @@ python3Packages.buildPythonApplication {
       click
     ]);
   meta = with lib; {
-    description = "Fabric is a python widgets thing framework made for *Nix based systems (Wayland and X11), using GTK+.";
-    homepage = "https://github.com/Fabric-Development/";
+    description = "Python widgets framework made for *Nix based systems (Wayland and X11), using GTK+.";
+    homepage = "https://github.com/Fabric-Development";
     maintainers = with maintainers; [daru-san];
     platforms = platforms.linux;
   };
