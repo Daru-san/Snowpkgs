@@ -1,49 +1,44 @@
 {
   lib,
-  pkgs,
   python3Packages,
   fetchFromGitHub,
   gtk3,
   cairo,
   gtk-layer-shell,
   gobject-introspection,
-  pip ? pkgs.python3Packages.pip,
-  psutil ? pkgs.python3Packages.psutil,
-  pygobject3 ? pkgs.python3Packages.pygobject3,
-  pycairo ? pkgs.python3Packages.pycairo,
-  loguru ? pkgs.python3Packages.loguru,
-  click ? pkgs.python3Packages.click,
   pkgconf,
 }:
-with python3Packages;
-  buildPythonApplication {
-    pname = "fabric";
-    version = "0.0.1";
-    src = fetchFromGitHub {
-      owner = "Fabric-Development";
-      repo = "fabric";
-      rev = "9adb28d7659d9068ff05f1410767334608fa4095";
-      hash = "sha256-U9lA+nht23tXoSredZEnXOzW/lTH0rr29nQF5zP9eEo=";
-    };
-    pyroject = true;
-    doCheck = false;
-    dependencies = [
+python3Packages.buildPythonApplication {
+  pname = "fabric";
+  version = "0-unstable-2024-05-15";
+  src = fetchFromGitHub {
+    owner = "Fabric-Development";
+    repo = "fabric";
+    rev = "67978f7526f620a7cbbe989643b4d2da6f87ee92";
+    hash = "sha256-4sLlnR1gFzeDjrxvx76dwcSaM3Q5phL6LgwUP2VLCic=";
+  };
+  pyroject = true;
+  doCheck = false;
+  dependencies =
+    [
       gtk3
       cairo
       gtk-layer-shell
       gobject-introspection
+      pkgconf
+    ]
+    ++ (with python3Packages; [
       pip
+      psutil
       pygobject3
       pycairo
       loguru
       click
-      psutil
-      pkgconf
-    ];
-    meta = with lib; {
-      description = "Fabric is a python widgets thing framework made for *Nix based systems (Wayland and X11), using GTK+.";
-      homepage = "https://github.com/Fabric-Development/";
-      maintainers = with maintainers; [darumaka];
-      platforms = platforms.linux;
-    };
-  }
+    ]);
+  meta = with lib; {
+    description = "Fabric is a python widgets thing framework made for *Nix based systems (Wayland and X11), using GTK+.";
+    homepage = "https://github.com/Fabric-Development/";
+    maintainers = with maintainers; [daru-san];
+    platforms = platforms.linux;
+  };
+}
