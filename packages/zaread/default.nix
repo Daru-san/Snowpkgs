@@ -11,7 +11,7 @@
 }:
 stdenv.mkDerivation {
   pname = "zaread";
-  version = "1.0.0";
+  version = "0-unstable-2023-10-28";
 
   src = fetchFromGitHub {
     owner = "paoloap";
@@ -43,7 +43,7 @@ stdenv.mkDerivation {
     homepage = "https://github.com/paoloap/zaread";
     license = licenses.gpl3Plus;
     mainProgram = "zaread";
-    maintainers = with maintainers; [daru];
+    maintainers = with maintainers; [daru-san];
     platforms = platforms.linux;
   };
 }
