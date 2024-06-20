@@ -23,6 +23,7 @@
       lexido = prev.callPackage ./packages/lexido {};
       mangayomi = prev.callPackage ./packages/mangayomi {};
       git-nautilus-icons = prev.callPackage ./packages/git-nautilus-icons {};
+      kronkhite = prev.callPackage ./packages/krohnkite {};
     };
 
     packages = genSystems (system: self.overlays.default null pkgsFor.${system});
