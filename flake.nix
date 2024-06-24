@@ -24,6 +24,7 @@
       mangayomi = prev.callPackage ./packages/mangayomi {};
       git-nautilus-icons = prev.callPackage ./packages/git-nautilus-icons {};
       kronkhite = prev.callPackage ./packages/krohnkite {};
+      hyprlandPlugins = nixpkgs.lib.recurseIntoAttrs (prev.callPackage ./packages/hyprland-plugins {});
     };
 
     packages = genSystems (system: self.overlays.default null pkgsFor.${system});
