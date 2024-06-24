@@ -17,27 +17,6 @@
       });
 
   plugins = {
-    hyprspace = {
-      fetchFromGitHub,
-      hyprland,
-    }:
-      mkHyprlandPlugin hyprland {
-        pluginName = "hyprspace";
-        version = "unstable-2024-06-17";
-
-        src = fetchFromGitHub {
-          owner = "KZDKM";
-          repo = "Hyprspace";
-          rev = "2f3edb68f47a8f5d99d10b322e9a85a285f53cc7";
-          hash = "sha256-iyj4D6c77uROAH9QdZjPd9SKnS/DuACMESqaEKnBgI8=";
-        };
-
-        installPhase = ''
-          make all
-        '';
-
-        dontStrip = true;
-      };
     hycov = {
       fetchFromGitHub,
       cmake,
