@@ -30,6 +30,6 @@
 
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
 
-      formatter = genSystems (system: pkgsFor.${system}.alejandra);
+      formatter = genSystems (system: pkgsFor.${system}.nixfmt-rfc-style);
     };
 }
