@@ -29,7 +29,7 @@ python3Packages.buildPythonPackage rec {
   meta = with lib; {
     description = "Nautilus Python extension to overlay icons on files in git repositories ";
     license = licenses.bsd2;
-    maintainers = with maintainers; [daru-san];
+    maintainers = with maintainers; [ daru-san ];
     homepage = "https://github.com/chrisjbillington/git-nautilus-icons";
     platforms = platforms.linux;
   };

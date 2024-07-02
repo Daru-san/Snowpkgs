@@ -38,7 +38,7 @@ python3Packages.buildPythonApplication {
   meta = with lib; {
     description = "Python widgets framework made for *Nix based systems (Wayland and X11), using GTK+.";
     homepage = "https://github.com/Fabric-Development";
-    maintainers = with maintainers; [daru-san];
+    maintainers = with maintainers; [ daru-san ];
     platforms = platforms.linux;
   };
 }

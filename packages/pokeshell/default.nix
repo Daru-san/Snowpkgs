@@ -18,8 +18,14 @@ stdenv.mkDerivation {
     rev = "75e2304ae2f56ba9f94076d4368a0e9e76aa0135";
     sha256 = "SdVACIVS36pgdd9rXJUtql+spLIzQVz5ikRGMRvPZqc=";
   };
-  buildInputs = [bash subversion jq chafa imagemagick];
-  nativeBuildInputs = [makeWrapper];
+  buildInputs = [
+    bash
+    subversion
+    jq
+    chafa
+    imagemagick
+  ];
+  nativeBuildInputs = [ makeWrapper ];
   installPhase = ''
     mkdir -pv $out/bin
 
@@ -28,7 +34,13 @@ stdenv.mkDerivation {
 
     wrapProgram $out/bin/pokeshell \
       --prefix PATH : ${
-      lib.makeBinPath [bash subversion jq chafa imagemagick]
-    }
+        lib.makeBinPath [
+          bash
+          subversion
+          jq
+          chafa
+          imagemagick
+        ]
+      }
   '';
 }

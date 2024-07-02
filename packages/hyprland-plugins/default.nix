@@ -4,24 +4,27 @@
   pkg-config,
   stdenv,
   hyprland,
-}: let
-  mkHyprlandPlugin = hyprland: args @ {pluginName, ...}:
-    stdenv.mkDerivation (args
+}:
+let
+  mkHyprlandPlugin =
+    hyprland:
+    args@{ pluginName, ... }:
+    stdenv.mkDerivation (
+      args
       // {
         pname = "${pluginName}";
-        nativeBuildInputs = [pkg-config] ++ args.nativeBuildInputs or [];
-        buildInputs =
-          [hyprland]
-          ++ hyprland.buildInputs
-          ++ (args.buildInputs or []);
-      });
+        nativeBuildInputs = [ pkg-config ] ++ args.nativeBuildInputs or [ ];
+        buildInputs = [ hyprland ] ++ hyprland.buildInputs ++ (args.buildInputs or [ ]);
+      }
+    );
 
   plugins = {
-    hycov = {
-      fetchFromGitHub,
-      cmake,
-      hyprland,
-    }:
+    hycov =
+      {
+        fetchFromGitHub,
+        cmake,
+        hyprland,
+      }:
       mkHyprlandPlugin hyprland {
         pluginName = "hycov";
         version = "unstable-2024-06-20";
@@ -33,10 +36,10 @@
           hash = "sha256-NRnxbkuiq1rQ+uauo7D+CEe73iGqxsWxTQa+1SEPnXQ=";
         };
 
-        nativeBuildInputs = [cmake];
+        nativeBuildInputs = [ cmake ];
 
         dontStrip = true;
       };
   };
 in
-  (lib.mapAttrs (name: plugin: callPackage plugin {}) plugins) // {inherit mkHyprlandPlugin;}
+(lib.mapAttrs (name: plugin: callPackage plugin { }) plugins) // { inherit mkHyprlandPlugin; }

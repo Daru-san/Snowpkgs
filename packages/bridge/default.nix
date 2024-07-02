@@ -1,11 +1,11 @@
-{ lib
-, stdenv
-, fetchurl
-, dpkg
-, wrapGAppsHook4
-, autoPatchelfHook
-, webkitgtk
-,
+{
+  lib,
+  stdenv,
+  fetchurl,
+  dpkg,
+  wrapGAppsHook4,
+  autoPatchelfHook,
+  webkitgtk,
 }:
 stdenv.mkDerivation rec {
   pname = "bridge-editor";
@@ -22,9 +22,7 @@ stdenv.mkDerivation rec {
     autoPatchelfHook
   ];
 
-  buildInputs = [
-    webkitgtk
-  ];
+  buildInputs = [ webkitgtk ];
   unpackPhase = "true";
 
   # Extract and copy executable in $out/bin

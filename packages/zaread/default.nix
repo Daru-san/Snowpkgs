@@ -20,9 +20,9 @@ stdenv.mkDerivation {
     hash = "sha256-g4Xb6gGA09/rfv0myzHbc830BwtD37IOYuEIwoOigP8=";
   };
 
-  nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
 
-  hardeningDisable = ["format"];
+  hardeningDisable = [ "format" ];
 
   buildPhase = ''
     mkdir -p $out/bin
@@ -33,17 +33,23 @@ stdenv.mkDerivation {
   installPhase = ''
     wrapProgram $out/bin/zaread \
       --prefix PATH : ${
-      lib.makeBinPath [bash zathura libreoffice typst file]
-    }  '';
+        lib.makeBinPath [
+          bash
+          zathura
+          libreoffice
+          typst
+          file
+        ]
+      }  '';
 
-  makeFlags = ["PREFIX=$(out)"];
+  makeFlags = [ "PREFIX=$(out)" ];
 
   meta = with lib; {
     description = "A (very) lightweight ebook and Office document reader";
     homepage = "https://github.com/paoloap/zaread";
     license = licenses.gpl3Plus;
     mainProgram = "zaread";
-    maintainers = with maintainers; [daru-san];
+    maintainers = with maintainers; [ daru-san ];
     platforms = platforms.linux;
   };
 }

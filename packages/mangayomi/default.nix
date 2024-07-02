@@ -1,16 +1,16 @@
-{ stdenv
-, lib
-, fetchurl
-, autoPatchelfHook
-, mpv
-, unzip
-, gtk3
-, pango
-, cairo
-, flutter
-, wrapGAppsHook4
-, jre_minimal
-,
+{
+  stdenv,
+  lib,
+  fetchurl,
+  autoPatchelfHook,
+  mpv,
+  unzip,
+  gtk3,
+  pango,
+  cairo,
+  flutter,
+  wrapGAppsHook4,
+  jre_minimal,
 }:
 stdenv.mkDerivation rec {
   pname = "mangayomi";
@@ -34,9 +34,7 @@ stdenv.mkDerivation rec {
     cairo
     flutter
   ];
-  runtimeDependencies = [
-    mpv
-  ];
+  runtimeDependencies = [ mpv ];
 
   sourceRoot = ".";
 
