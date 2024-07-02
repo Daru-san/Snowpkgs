@@ -1,24 +1,24 @@
-{
-  stdenv,
-  lib,
-  fetchurl,
-  autoPatchelfHook,
-  mpv,
-  unzip,
-  gtk3,
-  pango,
-  cairo,
-  flutter,
-  wrapGAppsHook4,
-  jre_minimal,
+{ stdenv
+, lib
+, fetchurl
+, autoPatchelfHook
+, mpv
+, unzip
+, gtk3
+, pango
+, cairo
+, flutter
+, wrapGAppsHook4
+, jre_minimal
+,
 }:
 stdenv.mkDerivation rec {
   pname = "mangayomi";
-  version = "0.2.45";
+  version = "0.2.7";
 
   src = fetchurl {
     url = "https://github.com/kodjodevf/mangayomi/releases/download/v${version}/Mangayomi-v${version}-linux.zip";
-    hash = "sha256-ewU4sbI2aaKhQ42y7escC71elSlrtGrSy66eemrV8wE=";
+    hash = "sha256-z+KS7YF5Op4OxiGswpB6P6ysDgWDYKbAGoB6YMTnUbQ=";
   };
   dontUnpack = true;
   nativeBuildInputs = [
@@ -50,10 +50,10 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "Manga reader and anime streamer";
     homepage = "https://github.com/kodjodevf/mangayomi";
-    platforms = ["x86_64-linux"];
+    platforms = [ "x86_64-linux" ];
     license = licenses.gpl3Plus;
-    sourceProvenance = with sourceTypes; [binaryNativeCode];
-    maintainers = with maintainers; [daru-san];
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    maintainers = with maintainers; [ daru-san ];
     mainProgram = "mangayomi";
   };
 }
