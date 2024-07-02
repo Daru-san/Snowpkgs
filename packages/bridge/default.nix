@@ -1,19 +1,19 @@
-{
-  lib,
-  stdenv,
-  fetchurl,
-  dpkg,
-  wrapGAppsHook4,
-  autoPatchelfHook,
-  webkitgtk,
+{ lib
+, stdenv
+, fetchurl
+, dpkg
+, wrapGAppsHook4
+, autoPatchelfHook
+, webkitgtk
+,
 }:
 stdenv.mkDerivation rec {
   pname = "bridge-editor";
-  version = "2.7.22";
+  version = "2.7.23";
 
   src = fetchurl {
     url = "https://github.com/bridge-core/editor/releases/download/v${version}/bridge_${version}_amd64.deb";
-    hash = "sha256-psEySbU5IdQ5cIic74tAZbHkU/CpFh8ciZrjMvf9lCE=";
+    hash = "sha256-L2fe6LlIDGi+hx9kk/cnGk3yvvyEdKGUYVXy2tNOy50=";
   };
 
   nativeBuildInputs = [
@@ -38,10 +38,10 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     description = "A lightweight IDE for Minecraft Add-Ons";
     homepage = "https://github.com/bridge-core/editor";
-    platforms = ["x86_64-linux"];
+    platforms = [ "x86_64-linux" ];
     license = licenses.gpl3Plus;
-    sourceProvenance = with sourceTypes; [binaryNativeCode];
-    maintainers = with maintainers; [daru-san];
+    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    maintainers = with maintainers; [ daru-san ];
     mainProgram = "bridge";
   };
 }
