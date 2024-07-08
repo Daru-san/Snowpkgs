@@ -27,6 +27,7 @@
         hyprlandPlugins = nixpkgs.lib.recurseIntoAttrs (prev.callPackage ./packages/hyprland-plugins { });
         valent = prev.callPackage ./packages/valent { };
         yoke = prev.callPackage ./packages/yoke { };
+        cmd-polkit = prev.callPackage ./packages/cmd-polkit { };
       };
 
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
