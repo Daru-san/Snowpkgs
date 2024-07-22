@@ -25,9 +25,9 @@
         git-nautilus-icons = prev.callPackage ./packages/git-nautilus-icons { };
         kronkhite = prev.callPackage ./packages/krohnkite { };
         hyprlandPlugins = nixpkgs.lib.recurseIntoAttrs (prev.callPackage ./packages/hyprland-plugins { });
-        valent = prev.callPackage ./packages/valent { };
+        valent = prev.callPackage ./packages/valent { stdenv = prev.clangStdenv; };
         yoke = prev.callPackage ./packages/yoke { };
-        cmd-polkit = prev.callPackage ./packages/cmd-polkit { };
+        cmd-polkit = prev.callPackage ./packages/cmd-polkit { stdenv = prev.clangStdenv; };
       };
 
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
