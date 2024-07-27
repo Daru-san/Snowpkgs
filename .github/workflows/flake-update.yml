@@ -14,5 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v13
+      - uses: DeterminateSystems/magic-nix-cache-action@v6
       - name: Update Nix Flake Lock
         uses: DeterminateSystems/update-flake-lock@v21
+      - uses: ./.github/workflows/nix-build.yml
