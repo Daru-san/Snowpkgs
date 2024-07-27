@@ -10,12 +10,12 @@
 }:
 python3Packages.buildPythonApplication {
   pname = "fabric";
-  version = "0-unstable-2024-05-15";
+  version = "0-unstable-2024-06-18";
   src = fetchFromGitHub {
     owner = "Fabric-Development";
     repo = "fabric";
-    rev = "67978f7526f620a7cbbe989643b4d2da6f87ee92";
-    hash = "sha256-4sLlnR1gFzeDjrxvx76dwcSaM3Q5phL6LgwUP2VLCic=";
+    rev = "17a99336dabb6b8ea4b40ee294c89e488b81533c";
+    hash = "sha256-oYlKIUQjXbLuRREmOHBD/6yD2qlMEAV53viauOvM35s=";
   };
   pyroject = true;
   doCheck = false;
