@@ -14,3 +14,5 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v6
       - name: Update flake packages
         uses: selfuryon/nix-update-action@v1.0.1
+        with: 
+          blacklist: "valent,pokeshell,krohnkite"
