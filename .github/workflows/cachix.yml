@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/workflows/nix-build.yml
+      - uses: ./.github/workflows/nix-build
 
 
           
