@@ -15,18 +15,12 @@
     {
       overlays.default = _: prev: {
         bridge-editor = prev.callPackage ./packages/bridge { };
-        gh-s = prev.callPackage ./packages/gh-s { };
         gh-download = prev.callPackage ./packages/gh-download { };
-        fabric = prev.callPackage ./packages/fabric { };
         pokeshell = prev.callPackage ./packages/pokeshell { };
-        zaread = prev.callPackage ./packages/zaread { };
-        lexido = prev.callPackage ./packages/lexido { };
-        # mangayomi = prev.callPackage ./packages/mangayomi { };
-        git-nautilus-icons = prev.callPackage ./packages/git-nautilus-icons { };
+        mangayomi = prev.callPackage ./packages/mangayomi { };
         kronkhite = prev.callPackage ./packages/krohnkite { };
         valent = prev.callPackage ./packages/valent { stdenv = prev.clangStdenv; };
         yoke = prev.callPackage ./packages/yoke { };
-        cmd-polkit = prev.callPackage ./packages/cmd-polkit { stdenv = prev.clangStdenv; };
       };
 
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
