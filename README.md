@@ -10,14 +10,14 @@ New packages added every once in a while
 
 <!--markdownlint-disable-->
 
-| Package                             | Description                                                                 | url                                         |
-| ----------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- |
-| Bridge _(attribute is bridge-core)_ | A minecraft addon IDE                                                       | <https://bridge-core.app/>                  |
-| Valent _(development version)_      | A kde-connect like app, written in GTK                                      | <https://github.com/andyholmes/valent>      |
-| Mangayomi _(won't build)_           | An comprehensive anime player and manga reader with anilist and MAL syncing | <https://github.com/kodjodevf/mangayomi>    |
-| Pokeshell                           | A pokemon terminal program for displaying pokemon sprites, with animation   | <https://github.com/acxz/pokeshell>         |
-| Yoke                                | A program that lets you use your phone as a gamepad                         | <https://github.com/rmst/yoke>              |
-| krohnkite _(forked)_                | A kwin tiling extension                                                     | <https://github.com/anametologin/krohnkite> |
+| Package                               | Description                                                                 | url                                         |
+| ------------------------------------- | --------------------------------------------------------------------------- | ------------------------------------------- |
+| Bridge _(attribute is bridge-editor)_ | A minecraft addon IDE                                                       | <https://bridge-core.app/>                  |
+| Valent _(development version)_        | A kde-connect like app, written in GTK                                      | <https://github.com/andyholmes/valent>      |
+| Mangayomi _(won't build)_             | An comprehensive anime player and manga reader with anilist and MAL syncing | <https://github.com/kodjodevf/mangayomi>    |
+| Pokeshell                             | A pokemon terminal program for displaying pokemon sprites, with animation   | <https://github.com/acxz/pokeshell>         |
+| Yoke                                  | A program that lets you use your phone as a gamepad                         | <https://github.com/rmst/yoke>              |
+| krohnkite _(forked)_                  | A kwin tiling extension                                                     | <https://github.com/anametologin/krohnkite> |
 
 <!--markdownlint-restore-->
 
