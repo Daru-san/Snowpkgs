@@ -13,6 +13,7 @@ jobs:
           - bridge-editor
           - kronkhite
           - valent
+          - yoke 
 
     runs-on: ubuntu-latest
     steps:
