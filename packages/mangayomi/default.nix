@@ -15,8 +15,8 @@
   mpv-unwrapped,
   webkitgtk_4_1,
   xdg-user-dirs,
-  gnome,
   jdk,
+  zenity,
 }:
 let
   # Used inside media-kit
@@ -80,6 +80,7 @@ flutter.buildFlutterApplication rec {
   gitHashes = {
     flutter_windows_webview = "sha256-rVu+qQJxOQG+LDFCSO3ueg3aHmIFhPK2H51FTHhLTlg=";
     media_kit_video = "sha256-Kx0rr4x6sxPgfX3C5jjr8VYq0X/pPnjNDI/F/d41rVk=";
+    desktop_webview_window = "sha256-PTZmKorYXLOITMBXNbyY6Gow2FMemV3j6LVaaZr7VnY=";
     flutter_qjs = "sha256-l6uUUqiIkdD3ayUY9rUzxKXunlW2QU2sAuDd8fc2Iyc=";
   };
 
@@ -126,7 +127,7 @@ flutter.buildFlutterApplication rec {
     --prefix PATH : ${
       lib.makeBinPath [
         xdg-user-dirs
-        gnome.zenity
+        zenity
       ]
     }
   '';
