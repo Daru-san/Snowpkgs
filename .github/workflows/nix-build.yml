@@ -11,7 +11,7 @@ jobs:
       matrix:
         package:
           - bridge-editor
-          - krohnkite
+          - kronkhite
           - valent
 
     runs-on: ubuntu-latest
