@@ -21,7 +21,7 @@ jobs:
         with:
           name: snowy-cache
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix-build
+      - run: nix build
 
 
           
