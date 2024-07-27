@@ -21,10 +21,9 @@
         pokeshell = prev.callPackage ./packages/pokeshell { };
         zaread = prev.callPackage ./packages/zaread { };
         lexido = prev.callPackage ./packages/lexido { };
-        mangayomi = prev.callPackage ./packages/mangayomi { };
+        # mangayomi = prev.callPackage ./packages/mangayomi { };
         git-nautilus-icons = prev.callPackage ./packages/git-nautilus-icons { };
         kronkhite = prev.callPackage ./packages/krohnkite { };
-        hyprlandPlugins = nixpkgs.lib.recurseIntoAttrs (prev.callPackage ./packages/hyprland-plugins { });
         valent = prev.callPackage ./packages/valent { stdenv = prev.clangStdenv; };
         yoke = prev.callPackage ./packages/yoke { };
         cmd-polkit = prev.callPackage ./packages/cmd-polkit { stdenv = prev.clangStdenv; };
