@@ -18,6 +18,7 @@ New packages added every once in a while
 | Pokeshell                             | A pokemon terminal program for displaying pokemon sprites, with animation   | <https://github.com/acxz/pokeshell>         |
 | Yoke                                  | A program that lets you use your phone as a gamepad                         | <https://github.com/rmst/yoke>              |
 | krohnkite _(forked)_                  | A kwin tiling extension                                                     | <https://github.com/anametologin/krohnkite> |
+| Poketex                               | A pokedex for the terminal, written in rust                                 | <https://github.com/ckaznable/poketex>      |
 
 <!--markdownlint-restore-->
 
