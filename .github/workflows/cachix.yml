@@ -15,13 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v13
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
-      - uses: cachix/cachix-action@v15
-        with:
-          name: snowy-cache
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix flake check
+      - uses: ./.github/workflows/nix-build.yml
 
 
           
