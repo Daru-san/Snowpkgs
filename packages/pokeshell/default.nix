@@ -11,12 +11,12 @@
 }:
 stdenv.mkDerivation {
   pname = "pokeshell";
-  version = "1.0.0";
+  version = "1.0.0-unstable-2024-04-13";
   src = fetchFromGitHub {
     owner = "acxz";
     repo = "pokeshell";
-    rev = "75e2304ae2f56ba9f94076d4368a0e9e76aa0135";
-    sha256 = "SdVACIVS36pgdd9rXJUtql+spLIzQVz5ikRGMRvPZqc=";
+    rev = "9d36fda54166918f7c7d7f01c1ca69d7b12bb53e";
+    sha256 = "sha256-Wo7UltgkkuQp+jJuUm5p4VjVR0azdpPVtb4eLrl/jZw=";
   };
   buildInputs = [
     bash
