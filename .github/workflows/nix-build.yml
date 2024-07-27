@@ -1,0 +1,28 @@
+name: nix-build
+on:
+  workflow_call:
+    secrets:
+      CACHIX_AUTH_TOKEN:
+        required: false
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        package:
+          - bridge-editor
+          - krohnkite
+          - valent
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v26
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: cachix/cachix-action@v12
+        with:
+          name: snowy-cache
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - run: nix build '.?submodules=1#${{ matrix.package }}'
