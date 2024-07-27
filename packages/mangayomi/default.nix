@@ -41,13 +41,13 @@ let
 in
 flutter.buildFlutterApplication rec {
   pname = "mangayomi";
-  version = "0.2.75-unstable-2024-07-17";
+  version = "0.2.75";
 
   src = fetchFromGitHub {
     owner = "kodjodevf";
     repo = "mangayomi";
     rev = "v${version}";
-    hash = "sha256-yrLaytLdGt7UIcAsLxmDks90uSFgfwFuoigcRCGLj78=";
+    hash = "sha256-Kt+FlgbUhvbR6dEwUKTqrr45Cm7pz4ejJPhoOnLTbZ8=";
   };
 
   postPatch = ''
@@ -100,11 +100,7 @@ flutter.buildFlutterApplication rec {
     jdk
   ];
 
-  cargoDeps = rustPlatform.fetchCargoTarball {
-    inherit src;
-    name = "${pname}-${version}";
-    hash = "sha256-9xUQEItdeebN/gSS3e/6fJhrqpk5cPsR7fxckiCQM4A=";
-  };
+  cargoDeps = rustPlatform.importCargoLock { lockFile = "${src}/rust/Cargo.lock"; };
 
   # media-kit builds mimalloc from source
   preConfigure = ''
