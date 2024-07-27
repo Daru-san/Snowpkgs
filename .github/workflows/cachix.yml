@@ -12,8 +12,5 @@ on:
 jobs:
   build:
     name: nix build 
-    uses: ./.github/workflows/nix-build
+    uses: ./.github/workflows/nix-build.yml
     secrets: inherit
-
-
-          
