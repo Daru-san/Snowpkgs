@@ -18,6 +18,7 @@ jobs:
           - trashy 
           - waydroid-script
           - snow-updater
+          - gh-download
 
     runs-on: ubuntu-latest
     steps:
