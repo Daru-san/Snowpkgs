@@ -27,6 +27,10 @@
         snow-updater = prev.callPackage ./scripts/default.nix { };
       };
 
+      devShells = genSystems (system: {
+        default = pkgsFor.${system}.mkShell { packages = [ self.packages.${system}.snow-updater ]; };
+      });
+
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
 
       formatter = genSystems (system: pkgsFor.${system}.nixfmt-rfc-style);
