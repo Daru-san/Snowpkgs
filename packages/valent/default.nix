@@ -19,6 +19,7 @@
   pulseaudio,
   pipewire,
   sqlite,
+  libphonenumber
 }:
 stdenv.mkDerivation rec {
   pname = "valent";
@@ -54,6 +55,7 @@ stdenv.mkDerivation rec {
     pulseaudio
     sqlite
     pipewire
+    libphonenumber
   ];
 
   mesonFlags = [
