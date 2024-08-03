@@ -22,6 +22,7 @@
         valent = prev.callPackage ./packages/valent { stdenv = prev.clangStdenv; };
         yoke = prev.callPackage ./packages/yoke { };
 	poketex = prev.callPackage ./packages/poketex { };
+        waydroid-script = prev.callPackage ./packages/waydroid-script { };
       };
 
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
