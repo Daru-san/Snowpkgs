@@ -14,7 +14,7 @@ in
 stdenvNoCC.mkDerivation rec {
   name = "waydroid_script";
 
-  version = "unstable-2024-01-20";
+  version = "0-unstable-2024-01-20";
 
   src = fetchFromGitHub {
     owner = "casualsnek";
