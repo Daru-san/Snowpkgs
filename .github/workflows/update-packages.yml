@@ -15,4 +15,4 @@ jobs:
       - name: Update flake packages
         uses: selfuryon/nix-update-action@v1.0.1
         with: 
-          blacklist: "valent,pokeshell,krohnkite,trashy,waydroid-script"
+          blacklist: "valent,pokeshell,krohnkite,trashy,waydroid-script,snow-updater"

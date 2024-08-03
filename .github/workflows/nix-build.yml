@@ -17,6 +17,7 @@ jobs:
           - poketex
           - trashy 
           - waydroid-script
+          - snow-updater
 
     runs-on: ubuntu-latest
     steps:

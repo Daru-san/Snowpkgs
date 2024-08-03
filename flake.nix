@@ -24,6 +24,7 @@
         poketex = prev.callPackage ./packages/poketex { };
         waydroid-script = prev.callPackage ./packages/waydroid-script { };
         trashy = prev.callPackage ./packages/trashy { };
+        snow-updater = prev.callPackage ./scripts/default.nix { };
       };
 
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
