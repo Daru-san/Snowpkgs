@@ -5,7 +5,7 @@
 }:
 stdenv.mkDerivation rec {
   pname = "gh-download";
-  version = "0.6.1";
+  version = "0.6.1-unstable-2023-04-03";
   src = pkgs.fetchFromGitHub {
     owner = "yuler";
     repo = "gh-download";
