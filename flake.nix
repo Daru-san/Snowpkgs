@@ -23,6 +23,7 @@
         yoke = prev.callPackage ./packages/yoke { };
 	poketex = prev.callPackage ./packages/poketex { };
         waydroid-script = prev.callPackage ./packages/waydroid-script { };
+        trashy = prev.callPackage ./packages/trashy { };
       };
 
       packages = genSystems (system: self.overlays.default null pkgsFor.${system});
