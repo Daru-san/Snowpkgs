@@ -6,7 +6,7 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "trashy";
-  version = "unstable-2024-06-01";
+  version = "2.0.0-unstable-2024-06-01";
 
   src = fetchFromGitHub {
     owner = "Daru-san";
@@ -15,7 +15,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-nv5Jodx65fctNng0HUMB+YyDgSW7W/V1ln+FqyfgfRo=";
   };
 
-  cargoHash = "sha256-ZWqWtWzb+CLH1ravBb/oV+aPxplEyiC1wEFhvchcLqg=";
+  cargoHash = "sha256-5XsDsq93n/LBGW2OsHvTueYl6eqXi3izKaG+guxiNFI=";
 
   nativeBuildInputs = [ installShellFiles ];
 
