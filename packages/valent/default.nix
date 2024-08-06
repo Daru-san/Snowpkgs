@@ -19,6 +19,8 @@
   pulseaudio,
   pipewire,
   sqlite,
+  cmake,
+  tracker,
   libphonenumber,
 }:
 stdenv.mkDerivation rec {
@@ -37,6 +39,7 @@ stdenv.mkDerivation rec {
     desktop-file-utils
     meson
     ninja
+    cmake
     pkg-config
     wrapGAppsHook4
   ];
@@ -49,6 +52,7 @@ stdenv.mkDerivation rec {
     gst_all_1.gstreamer
     gst_all_1.gst-plugins-base
     json-glib
+    tracker
     libadwaita
     libpeas2
     libportal-gtk4
