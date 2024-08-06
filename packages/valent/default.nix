@@ -19,18 +19,18 @@
   pulseaudio,
   pipewire,
   sqlite,
-  libphonenumber
+  libphonenumber,
 }:
 stdenv.mkDerivation rec {
   pname = "valent";
-  version = "1.0.0.alpha.45-unstable-2024-08-02";
+  version = "1.0.0.alpha.45-unstable-2024-08-06";
 
   src = fetchFromGitHub {
     owner = "andyholmes";
     repo = "valent";
-    rev = "57a5ab4a37f8e6fe1050b7ecae1ce03347e9c142";
+    rev = "2e195d61a05508f6e6b63edab6dc37244ddbd67d";
     fetchSubmodules = true;
-    hash = "sha256-PpXdiV879mmT/Dr1vQP2KKOeYbAyZDafvHnhJ4+j4aQ=";
+    hash = "sha256-B1e6hD92LqntwzwAPYOzdZ0i/gefGR2AB8m3xpocnW8=";
   };
 
   nativeBuildInputs = [
