@@ -9,13 +9,13 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "krohnkite";
-  version = "0.9.7-unstable-2024-08-05";
+  version = "0.9.7-unstable-2024-08-08";
 
   src = fetchFromGitHub {
     owner = "anametologin";
     repo = "krohnkite";
-    rev = "81ef59a05bc122f5d8fc1d11a9f0d5e8ad019826";
-    hash = "sha256-NiOR8D/5sWP85YvE5UUXUW3lZr+3l9SJdWT0W9jBhcw=";
+    rev = "e7f7851f8f56f52237db74cb91db126157eada19";
+    hash = "sha256-zK9m0OYldrflwsjOaCBgyWPzFxPh0rFqvnd4R+9jxT8=";
   };
 
   buildInputs = with libsForQt5; [
