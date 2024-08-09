@@ -41,13 +41,13 @@ let
 in
 flutter.buildFlutterApplication rec {
   pname = "mangayomi";
-  version = "0.2.75";
+  version = "0.2.9";
 
   src = fetchFromGitHub {
     owner = "kodjodevf";
     repo = "mangayomi";
     rev = "v${version}";
-    hash = "sha256-Kt+FlgbUhvbR6dEwUKTqrr45Cm7pz4ejJPhoOnLTbZ8=";
+    hash = "sha256-UPn4S9gI/r9+RvM0sH3yqRiNZhIM1ro43rDPFvbKGFc=";
   };
 
   postPatch = ''
