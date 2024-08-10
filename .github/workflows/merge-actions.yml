@@ -1,4 +1,4 @@
-name: Enable automerge on dependabot PRs
+name: Automerge Actions
 
 on:
   # See note below about using pull_request_target
