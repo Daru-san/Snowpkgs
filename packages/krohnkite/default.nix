@@ -9,7 +9,7 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "krohnkite";
-  version = "0.9.7-unstable-2024-08-08";
+  version = "0.9.7";
 
   src = fetchFromGitHub {
     owner = "anametologin";
