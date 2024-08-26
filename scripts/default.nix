@@ -1,33 +1,34 @@
 {
-  stdenv,
   makeWrapper,
   nix-update,
   lib,
+  python3Packages,
 }:
-stdenv.mkDerivation {
-  pname = "snow-update";
-  version = "1.0";
+python3Packages.buildPythonApplication rec {
+  pname = "snow-updater";
+  version = "1.1";
+  format = "other";
 
   src = ./.;
 
-  nativeBuildInputs = [
-    makeWrapper
-  ];
+  dontUnpack = true;
+
+  nativeBuildInputs = [makeWrapper];
 
   installPhase = ''
     mkdir -p $out/bin
-    install -Dm775 update.sh $out/bin/snow-update
+    install -Dm775 $src/update.py $out/bin/${pname}
   '';
 
   postInstall = let
     wrapperPath = lib.makeBinPath [nix-update];
   in ''
-    wrapProgram $out/bin/snow-update \
+    wrapProgram $out/bin/snow-updater \
       --prefix PATH : ${wrapperPath}
   '';
 
   meta = {
-    description = "The update script";
+    description = "The update script for my packages";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [daru-san];
   };
