@@ -6,7 +6,7 @@ import subprocess, os, pathlib
 currentPath = pathlib.Path().resolve()
 currentDir = os.path.abspath(currentPath)
 
-if not "Snowpkgs".upper() in currentDir.upper():
+if not "pkgs".upper() in currentDir.upper():
     print("Please run this script in the `snowpkgs` repository")
     exit(0)
 
