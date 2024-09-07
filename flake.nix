@@ -4,7 +4,10 @@
   inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
   outputs =
-    { self, nixpkgs }:
+    {
+      self,
+      nixpkgs,
+    }:
     let
       genSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
@@ -24,6 +27,7 @@
         poketex = prev.callPackage ./packages/poketex { };
         waydroid-script = prev.callPackage ./packages/waydroid-script { };
         trashy = prev.callPackage ./packages/trashy { };
+        qt-scrcpy = prev.callPackage ./packages/qt-scrcpy { };
         snow-updater = prev.callPackage ./scripts/default.nix { };
       };
 
