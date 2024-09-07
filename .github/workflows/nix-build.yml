@@ -19,6 +19,7 @@ jobs:
           - waydroid-script
           - snow-updater
           - gh-download
+          - qt-scrcpy
 
     runs-on: ubuntu-latest
     steps:
