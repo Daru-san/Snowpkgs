@@ -6,6 +6,7 @@
   libsForQt5,
   scrcpy,
   makeDesktopItem,
+  copyDesktopItems,
 }:
 stdenv.mkDerivation rec {
   pname = "qt-scrcpy";
@@ -21,6 +22,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    copyDesktopItems
   ];
 
   buildInputs = with libsForQt5; [
