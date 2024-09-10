@@ -27,7 +27,7 @@
         poketex = prev.callPackage ./packages/poketex { };
         waydroid-script = prev.callPackage ./packages/waydroid-script { };
         trashy = prev.callPackage ./packages/trashy { };
-        qt-scrcpy = prev.callPackage ./packages/qt-scrcpy { };
+        qtscrcpy = prev.callPackage ./packages/qtscrcpy { };
         snow-updater = prev.callPackage ./scripts/default.nix { };
       };
 

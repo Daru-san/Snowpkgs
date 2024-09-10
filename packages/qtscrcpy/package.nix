@@ -9,7 +9,7 @@
   copyDesktopItems,
 }:
 stdenv.mkDerivation rec {
-  pname = "qt-scrcpy";
+  pname = "qtscrcpy";
   version = "2.2.1";
 
   src =
@@ -28,16 +28,17 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     cmake
+    libsForQt5.wrapQtAppsHook
     copyDesktopItems
   ];
 
-  buildInputs = with libsForQt5; [
-    qtbase
-    wrapQtAppsHook
-    qtmultimedia
-    scrcpy
-    qtx11extras
-  ];
+  buildInputs =
+    [ scrcpy ]
+    + (with libsForQt5; [
+      qtbase
+      qtmultimedia
+      qtx11extras
+    ]);
 
   env.NIX_CFLAGS_COMPILE = toString [
     "-Wno-error=sign-compare"
@@ -47,6 +48,7 @@ stdenv.mkDerivation rec {
     runHook preInstall
     mkdir -p $out/bin
     cp -r ../output/x64/Release/* $out/bin
+    runHook postInstall
   '';
 
   desktopItems = [
@@ -63,12 +65,12 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  meta = with lib; {
+  meta = {
     description = "Android real-time display control software";
     homepage = "https://github.com/barry-ran/QtScrcpy";
-    license = licenses.asl20;
-    maintainers = with maintainers; [ daru-san ];
+    license = lib.licenses.asl20;
+    maintainers = [ lib.maintainers.daru-san ];
     mainProgram = "QtScrcpy";
-    platforms = platforms.all;
+    platforms = lib.platforms.all;
   };
 }
