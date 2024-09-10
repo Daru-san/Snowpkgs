@@ -34,7 +34,7 @@ stdenv.mkDerivation rec {
 
   buildInputs =
     [ scrcpy ]
-    + (with libsForQt5; [
+    ++ (with libsForQt5; [
       qtbase
       qtmultimedia
       qtx11extras
