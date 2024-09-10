@@ -36,7 +36,7 @@ class Updaters:
 
 
 ud = Updaters()
-version_pnames = ["bridge-editor", "poketex", "qt-scrcpy"]
+version_pnames = ["bridge-editor", "poketex", "qtscrcpy"]
 branch_pnames = ["valent", "kronkhite", "waydroid-script", "trashy"]
 
 for x in version_pnames:
