@@ -12,13 +12,19 @@ stdenv.mkDerivation rec {
   pname = "qt-scrcpy";
   version = "2.2.1";
 
-  src = fetchFromGitHub {
-    owner = "barry-ran";
-    repo = "QtScrcpy";
-    rev = "v${version}";
-    hash = "sha256-PL/UvRNqvLaFuvSHbkJsaJ2nqRp5+ERM+rmlKVtbShk=";
-    fetchSubmodules = true;
-  };
+  src =
+    (fetchFromGitHub {
+      owner = "barry-ran";
+      repo = "QtScrcpy";
+      rev = "v${version}";
+      hash = "sha256-PL/UvRNqvLaFuvSHbkJsaJ2nqRp5+ERM+rmlKVtbShk=";
+      fetchSubmodules = true;
+    }).overrideAttrs
+      (_: {
+        GIT_CONFIG_COUNT = 1;
+        GIT_CONFIG_KEY_0 = "url.https://github.com/.insteadOf";
+        GIT_CONFIG_VALUE_0 = "git@github.com:";
+      });
 
   nativeBuildInputs = [
     cmake
