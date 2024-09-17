@@ -5,7 +5,6 @@
   stdenv,
   darwin,
 }:
-
 rustPlatform.buildRustPackage rec {
   pname = "poketex";
   version = "1.14.0";
@@ -22,7 +21,7 @@ rustPlatform.buildRustPackage rec {
   buildInputs = lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.CoreFoundation ];
 
   postInstall = ''
-    mkdir -p $out/local/share/poketex 
+    mkdir -p $out/local/share/poketex
     cp -rf $src/colorscripts $out/local/share/poketex
   '';
 

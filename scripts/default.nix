@@ -13,23 +13,25 @@ python3Packages.buildPythonApplication rec {
 
   dontUnpack = true;
 
-  nativeBuildInputs = [makeWrapper];
+  nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''
     mkdir -p $out/bin
     install -Dm775 $src/update.py $out/bin/${pname}
   '';
 
-  postInstall = let
-    wrapperPath = lib.makeBinPath [nix-update];
-  in ''
-    wrapProgram $out/bin/snow-updater \
-      --prefix PATH : ${wrapperPath}
-  '';
+  postInstall =
+    let
+      wrapperPath = lib.makeBinPath [ nix-update ];
+    in
+    ''
+      wrapProgram $out/bin/snow-updater \
+        --prefix PATH : ${wrapperPath}
+    '';
 
   meta = {
     description = "The update script for my packages";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [daru-san];
+    maintainers = with lib.maintainers; [ daru-san ];
   };
 }

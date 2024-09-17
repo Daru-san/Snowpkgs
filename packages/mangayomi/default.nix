@@ -57,7 +57,11 @@ flutter.buildFlutterApplication rec {
 
   customSourceBuilders = {
     rinf =
-      { version, src, ... }:
+      {
+        version,
+        src,
+        ...
+      }:
       stdenv.mkDerivation {
         pname = "rinf";
         inherit version src;
