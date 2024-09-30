@@ -9,11 +9,11 @@
 }:
 stdenv.mkDerivation rec {
   pname = "bridge-editor";
-  version = "2.7.36";
+  version = "2.7.37";
 
   src = fetchurl {
     url = "https://github.com/bridge-core/editor/releases/download/v${version}/bridge_${version}_amd64.deb";
-    hash = "sha256-8De+T2QL3VdT0uk7bT34ZQXOA9tU4LVnM/ljh06dtBI=";
+    hash = "sha256-p0ln5Q64KFQucQWKD9Lou/G2dmxEougL7OIE6Ny3hRw=";
   };
 
   nativeBuildInputs = [
