@@ -92,8 +92,8 @@ rustPlatform.buildRustPackage {
 
   postPatch = ''
     substituteInPlace ./tauri.conf.json \
-      --replace '"distDir": "../dist",' '"distDir": "dist",' \
-      --replace '"beforeBuildCommand": "VITE_IS_TAURI_APP=true npm run build",' '"beforeBuildCommand": "",'
+      --replace-quiet '"distDir": "../dist",' '"distDir": "dist",' \
+      --replace-quiet '"beforeBuildCommand": "VITE_IS_TAURI_APP=true npm run build",' '"beforeBuildCommand": "",'
   '';
 
   buildPhase = ''
@@ -110,10 +110,15 @@ rustPlatform.buildRustPackage {
     mkdir -p $out/bin/
     mkdir -p $out/share/
 
-    cp target/release/bundle/deb/bridge_0.0.0_amd64/data/usr/bin/treedome $out/bin/treedome
+    cp target/release/bundle/deb/bridge_0.0.0_amd64/data/usr/bin/bridge $out/bin/bridge
     cp -R target/release/bundle/deb/bridge_0.0.0_amd64/data/usr/share/** $out/share/
 
     runHook postInstall
+  '';
+
+  postFixup = ''
+    wrapProgram "$out/bin/bridge" \
+      --set WEBKIT_DISABLE_COMPOSITING_MODE 1
   '';
 
   meta = with lib; {
