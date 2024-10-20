@@ -1,13 +1,18 @@
 {
   lib,
-  wrapGAppsHook4,
-  autoPatchelfHook,
+  wrapGAppsHook3,
   buildNpmPackage,
   fetchFromGitHub,
   rustPlatform,
   nodejs_20,
+  cargo-tauri,
+  pkg-config,
+  gsettings-desktop-schemas,
+  webkitgtk,
+  gtk3,
+  openssl,
 }:
-buildNpmPackage rec {
+let
   pname = "editor";
   version = "2.7.37";
 
@@ -18,40 +23,103 @@ buildNpmPackage rec {
     hash = "sha256-fW/MIr9Idb5AJFpKFTcbl0XInhxNQDVY1qoGIwRxzp0=";
   };
 
-  nodejs = nodejs_20;
+  frontend = buildNpmPackage {
+    pname = "editor-frontend";
 
-  packageLock = ./package-lock.json;
+    inherit version src;
 
-  npmDepsHash = "sha256-0nAI+SCsG763DhlJykzurC0xroEelZMN0lgcyWeTA9E=";
+    nodejs = nodejs_20;
 
-  makeCacheWritable = true;
+    dontNpmBuild = true;
 
-  npmFlags = [
-    "--legacy-peer-deps"
-  ];
+    npmDepsHash = "sha256-0nAI+SCsG763DhlJykzurC0xroEelZMN0lgcyWeTA9E=";
 
-  postPatch = ''
-    rm package-lock.json
-    ln -s ${./package-lock.json} package-lock.json
-  '';
+    makeCacheWritable = true;
 
-  cargoDeps = rustPlatform.fetchCargoTarball {
-    inherit pname version src;
-    sourceRoot = "${src.name}/${cargoRoot}";
-    hash = "sha256-Q8Ny4rkW+1g1825vsfOU3UHHXoxRo6wezwcHz9puTwI=";
+    env.VITE_IS_TAURI_APP = true;
+
+    npmFlags = [
+      "--legacy-peer-deps"
+    ];
+
+    postPatch = ''
+      rm package-lock.json
+      ln -s ${./package-lock.json} package-lock.json
+    '';
+
+    buildPhase = ''
+      runHook preBuild
+
+      node ./scripts/buildApp.mjs
+
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/dist
+      cp -r dist/** $out/dist
+
+      runHook postInstall
+    '';
   };
+in
+rustPlatform.buildRustPackage {
+  inherit pname version src;
 
-  cargoRoot = "src-tauri";
+  sourceRoot = "${src.name}/src-tauri";
+
+  cargoHash = "sha256-Q8Ny4rkW+1g1825vsfOU3UHHXoxRo6wezwcHz9puTwI=";
 
   nativeBuildInputs = [
-    wrapGAppsHook4
-    autoPatchelfHook
+    wrapGAppsHook3
+    cargo-tauri
+    pkg-config
   ];
+
+  buildInputs = [
+    gsettings-desktop-schemas
+    gtk3
+    openssl
+    webkitgtk
+  ];
+
+  preConfigure = ''
+    mkdir -p dist
+    cp -R ${frontend}/dist/** dist
+  '';
+
+  postPatch = ''
+    substituteInPlace ./tauri.conf.json \
+      --replace '"distDir": "../dist",' '"distDir": "dist",' \
+      --replace '"beforeBuildCommand": "VITE_IS_TAURI_APP=true npm run build",' '"beforeBuildCommand": "",'
+  '';
+
+  buildPhase = ''
+    runHook preBuild
+
+    cargo tauri build -b deb
+
+    runHook postBuild
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin/
+    mkdir -p $out/share/
+
+    cp target/release/bundle/deb/bridge_0.0.0_amd64/data/usr/bin/treedome $out/bin/treedome
+    cp -R target/release/bundle/deb/bridge_0.0.0_amd64/data/usr/share/** $out/share/
+
+    runHook postInstall
+  '';
 
   meta = with lib; {
     description = "A lightweight IDE for Minecraft Add-Ons";
     homepage = "https://github.com/bridge-core/editor";
-    platforms = lib.platforms.all;
+    platforms = platforms.linux;
     license = licenses.gpl3Only;
     maintainers = with maintainers; [ daru-san ];
     mainProgram = "bridge";
