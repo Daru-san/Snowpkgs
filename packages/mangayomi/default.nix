@@ -17,6 +17,7 @@
   xdg-user-dirs,
   zenity,
   jdk,
+  libass,
 }:
 
 let
@@ -80,6 +81,7 @@ flutter.buildFlutterApplication rec {
     mpv-unwrapped
     webkitgtk_4_1
     jdk
+    libass
   ];
 
   cargoRoot = "rust";
