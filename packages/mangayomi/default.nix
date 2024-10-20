@@ -15,9 +15,10 @@
   mpv-unwrapped,
   webkitgtk_4_1,
   xdg-user-dirs,
-  jdk,
   zenity,
+  jdk,
 }:
+
 let
   # Used inside media-kit
   # https://github.com/media-kit/media-kit/blob/main/libs/linux/media_kit_libs_linux/linux/CMakeLists.txt
@@ -36,18 +37,17 @@ let
     }
     .${stdenv.system} or (throw "Unsupported system");
 
-  mainPubspecLock = lib.importJSON ./pubspec.lock.json;
-  cargokitBuildToolPubspecLock = lib.importJSON ./cargokit-build-tool-pubspec.lock.json;
 in
+
 flutter.buildFlutterApplication rec {
   pname = "mangayomi";
-  version = "0.2.9";
+  version = "0.3.55";
 
   src = fetchFromGitHub {
     owner = "kodjodevf";
     repo = "mangayomi";
-    rev = "v${version}";
-    hash = "sha256-UPn4S9gI/r9+RvM0sH3yqRiNZhIM1ro43rDPFvbKGFc=";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-16LLWJWkKzMNqVmxxgDF7SCOqtCeW2xBblJufda3UmI=";
   };
 
   postPatch = ''
@@ -55,37 +55,14 @@ flutter.buildFlutterApplication rec {
         --replace-fail "AppRun" "mangayomi"
   '';
 
-  customSourceBuilders = {
-    rinf =
-      {
-        version,
-        src,
-        ...
-      }:
-      stdenv.mkDerivation {
-        pname = "rinf";
-        inherit version src;
-        inherit (src) passthru;
-
-        patches = [ ./rinf.patch ];
-
-        installPhase = ''
-          runHook preInstall
-          mkdir -p "$out"
-          cp -r * "$out"
-          runHook postInstall
-        '';
-      };
-  };
-
-  # build_tool hack part 1: join dependencies with the main package
-  pubspecLock = lib.recursiveUpdate cargokitBuildToolPubspecLock mainPubspecLock;
+  pubspecLock = lib.importJSON ./pubspec.lock.json;
 
   gitHashes = {
-    flutter_windows_webview = "sha256-rVu+qQJxOQG+LDFCSO3ueg3aHmIFhPK2H51FTHhLTlg=";
-    media_kit_video = "sha256-Kx0rr4x6sxPgfX3C5jjr8VYq0X/pPnjNDI/F/d41rVk=";
-    desktop_webview_window = "sha256-PTZmKorYXLOITMBXNbyY6Gow2FMemV3j6LVaaZr7VnY=";
-    flutter_qjs = "sha256-l6uUUqiIkdD3ayUY9rUzxKXunlW2QU2sAuDd8fc2Iyc=";
+    "flutter_qjs" = "sha256-l6uUUqiIkdD3ayUY9rUzxKXunlW2QU2sAuDd8fc2Iyc=";
+    "flutter_windows_webview" = "sha256-rVu+qQJxOQG+LDFCSO3ueg3aHmIFhPK2H51FTHhLTlg=";
+    "media_kit_libs_windows_video" = "sha256-aKW7HHiBP1IIKQ+v6QGtYSimQIbJ+43cU8xn6VoJb38=";
+    "media_kit_native_event_loop" = "sha256-aKW7HHiBP1IIKQ+v6QGtYSimQIbJ+43cU8xn6VoJb38=";
+    "media_kit_video" = "sha256-Kx0rr4x6sxPgfX3C5jjr8VYq0X/pPnjNDI/F/d41rVk=";
   };
 
   nativeBuildInputs = [
@@ -105,7 +82,13 @@ flutter.buildFlutterApplication rec {
     jdk
   ];
 
-  cargoDeps = rustPlatform.importCargoLock { lockFile = "${src}/rust/Cargo.lock"; };
+  cargoRoot = "rust";
+
+  cargoDeps = rustPlatform.fetchCargoTarball {
+    inherit pname version src;
+    sourceRoot = "${src.name}/${cargoRoot}";
+    hash = "sha256-efIfv/yZV6AFqJcdGQrFr24+gKUxX1xn+bRgPLwToP8=";
+  };
 
   # media-kit builds mimalloc from source
   preConfigure = ''
@@ -114,9 +97,9 @@ flutter.buildFlutterApplication rec {
 
   preBuild = ''
     # build_tool hack part 2: add build_tool as an actually resolvable package (the location is relative to the rinf package directory)
-    jq '.packages += [.packages.[] | select(.name == "rinf") | .rootUri += "/cargokit/build_tool" | .name = "build_tool"]' .dart_tool/package_config.json | sponge .dart_tool/package_config.json
+    #jq '.packages += [.packages.[] | select(.name == "rinf") | .rootUri += "/cargokit/build_tool" | .name = "build_tool"]' .dart_tool/package_config.json | sponge .dart_tool/package_config.json
     # generate messages used by the main package
-    packageRun rinf message
+    #packageRun rinf message
   '';
 
   env.NIX_CFLAGS_COMPILE = "-Wno-error=int-conversion";
@@ -137,7 +120,7 @@ flutter.buildFlutterApplication rec {
   '';
 
   meta = {
-    changelog = "https://github.com/kodjodevf/mangayomi/releases/tag/${src.rev}";
+    changelog = "https://github.com/kodjodevf/mangayomi/releases/tag/v${version}";
     description = "Free and open source application for reading manga and watching anime";
     homepage = "https://github.com/kodjodevf/mangayomi";
     license = lib.licenses.asl20;

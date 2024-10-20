@@ -370,18 +370,6 @@
       "source": "hosted",
       "version": "0.7.10"
     },
-    "desktop_webview_window": {
-      "dependency": "direct main",
-      "description": {
-        "name": "desktop_webview_window",
-        "url": "https://github.com/kodjodevf/desktop_webview_window.git",
-        "ref": "main",
-        "resolved-ref": "861cb573a6decb815741ed76e845fe05a3662c95",
-        "path": "."
-      },
-      "source": "git",
-      "version": "0.2.3"
-    },
     "directed_graph": {
       "dependency": "transitive",
       "description": {
