@@ -13,7 +13,6 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v20
       - uses: DeterminateSystems/magic-nix-cache-action@v6
-      - name: s
       - name: Update flake packages
         run: nix develop --command snow-updater
         env:
