@@ -110,8 +110,8 @@ rustPlatform.buildRustPackage {
     mkdir -p $out/bin/
     mkdir -p $out/share/
 
-    cp target/release/bundle/deb/bridge_0.0.0_amd64/data/usr/bin/bridge $out/bin/bridge
-    cp -R target/release/bundle/deb/bridge_0.0.0_amd64/data/usr/share/** $out/share/
+    cp target/release/bundle/deb/bridge_${version}_amd64/data/usr/bin/bridge $out/bin/bridge
+    cp -R target/release/bundle/deb/bridge_${version}_amd64/data/usr/share/** $out/share/
 
     runHook postInstall
   '';
