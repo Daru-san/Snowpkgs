@@ -15,11 +15,13 @@ python3Packages.buildPythonApplication rec {
 
   nativeBuildInputs = [ makeWrapper ];
 
-  buildInputs = [ nix-update ];
-
   installPhase = ''
+    runHook preInstall
+
     mkdir -p $out/bin
     install -Dm775 $src/update.py $out/bin/${pname}
+
+    runHook postInstall
   '';
 
   postInstall =
