@@ -1,44 +1,58 @@
 {
   lib,
-  stdenv,
-  fetchurl,
-  dpkg,
   wrapGAppsHook4,
   autoPatchelfHook,
-  webkitgtk,
+  buildNpmPackage,
+  fetchFromGitHub,
+  rustPlatform,
+  nodejs_20,
 }:
-stdenv.mkDerivation rec {
-  pname = "bridge-editor";
+buildNpmPackage rec {
+  pname = "editor";
   version = "2.7.37";
 
-  src = fetchurl {
-    url = "https://github.com/bridge-core/editor/releases/download/v${version}/bridge_${version}_amd64.deb";
-    hash = "sha256-p0ln5Q64KFQucQWKD9Lou/G2dmxEougL7OIE6Ny3hRw=";
+  src = fetchFromGitHub {
+    owner = "bridge-core";
+    repo = "editor";
+    rev = "v${version}";
+    hash = "sha256-fW/MIr9Idb5AJFpKFTcbl0XInhxNQDVY1qoGIwRxzp0=";
   };
 
+  nodejs = nodejs_20;
+
+  packageLock = ./package-lock.json;
+
+  npmDepsHash = "sha256-0nAI+SCsG763DhlJykzurC0xroEelZMN0lgcyWeTA9E=";
+
+  makeCacheWritable = true;
+
+  npmFlags = [
+    "--legacy-peer-deps"
+  ];
+
+  postPatch = ''
+    rm package-lock.json
+    ln -s ${./package-lock.json} package-lock.json
+  '';
+
+  cargoDeps = rustPlatform.fetchCargoTarball {
+    inherit pname version src;
+    sourceRoot = "${src.name}/${cargoRoot}";
+    hash = "sha256-Q8Ny4rkW+1g1825vsfOU3UHHXoxRo6wezwcHz9puTwI=";
+  };
+
+  cargoRoot = "src-tauri";
+
   nativeBuildInputs = [
-    dpkg
     wrapGAppsHook4
     autoPatchelfHook
   ];
 
-  buildInputs = [ webkitgtk ];
-  unpackPhase = "true";
-
-  # Extract and copy executable in $out/bin
-  installPhase = ''
-    mkdir -p $out
-    dpkg -x $src $out
-    cp -av $out/usr/* $out
-    rm -rf $out/usr
-  '';
-
   meta = with lib; {
     description = "A lightweight IDE for Minecraft Add-Ons";
     homepage = "https://github.com/bridge-core/editor";
-    platforms = [ "x86_64-linux" ];
-    license = licenses.gpl3Plus;
-    sourceProvenance = with sourceTypes; [ binaryNativeCode ];
+    platforms = lib.platforms.all;
+    license = licenses.gpl3Only;
     maintainers = with maintainers; [ daru-san ];
     mainProgram = "bridge";
   };
