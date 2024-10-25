@@ -1,42 +1,79 @@
 {
   description = "The packages I use that have not been upstreamed to nixpks";
 
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    cachix-push.url = "github:juspay/cachix-push";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
+      flake-parts,
+      cachix-push,
+      ...
     }:
-    let
-      genSystems = nixpkgs.lib.genAttrs [
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ inputs.cachix-push.flakeModule ];
+      systems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
-      pkgsFor = nixpkgs.legacyPackages;
-    in
-    {
-      overlays.default = _: prev: {
-        bridge-editor = prev.callPackage ./packages/bridge { };
-        gh-download = prev.callPackage ./packages/gh-download { };
-        pokeshell = prev.callPackage ./packages/pokeshell { };
-        mangayomi = prev.callPackage ./packages/mangayomi { };
-        kronkhite = prev.callPackage ./packages/krohnkite { };
-        valent = prev.callPackage ./packages/valent { stdenv = prev.clangStdenv; };
-        yoke = prev.callPackage ./packages/yoke { };
-        poketex = prev.callPackage ./packages/poketex { };
-        waydroid-script = prev.callPackage ./packages/waydroid-script { };
-        trashy = prev.callPackage ./packages/trashy { };
-        qtscrcpy = prev.callPackage ./packages/qtscrcpy { };
-        snow-updater = prev.callPackage ./scripts/default.nix { };
-      };
+      perSystem =
+        {
+          config,
+          pkgs,
+          system,
+          self',
+          lib,
+          ...
+        }:
+        {
+          cachix-push = {
+            cacheName = "snowy-cache";
+            pathsToCache = {
+              devshell = self'.devShells.default;
+              inherit (self'.packages)
+                bridge-editor
+                gh-download
+                pokeshell
+                kronkhite
+                valent
+                yoke
+                poketex
+                waydroid-script
+                trashy
+                qtscrcpy
+                snow-updater
+                ;
+            };
+          };
 
-      devShells = genSystems (system: {
-        default = pkgsFor.${system}.mkShell { packages = [ self.packages.${system}.snow-updater ]; };
-      });
+          formatter = pkgs.nixfmt-rfc-style;
 
-      packages = genSystems (system: self.overlays.default null pkgsFor.${system});
+          devShells.default = pkgs.mkShell {
+            packages = [
+              self'.packages.snow-updater
+              pkgs.git
+            ];
+          };
 
-      formatter = genSystems (system: pkgsFor.${system}.nixfmt-rfc-style);
+          packages = {
+            bridge-editor = pkgs.callPackage ./packages/bridge { };
+            gh-download = pkgs.callPackage ./packages/gh-download { };
+            pokeshell = pkgs.callPackage ./packages/pokeshell { };
+            mangayomi = pkgs.callPackage ./packages/mangayomi { };
+            kronkhite = pkgs.callPackage ./packages/krohnkite { };
+            valent = pkgs.callPackage ./packages/valent { stdenv = pkgs.clangStdenv; };
+            yoke = pkgs.callPackage ./packages/yoke { };
+            poketex = pkgs.callPackage ./packages/poketex { };
+            waydroid-script = pkgs.callPackage ./packages/waydroid-script { };
+            trashy = pkgs.callPackage ./packages/trashy { };
+            qtscrcpy = pkgs.callPackage ./packages/qtscrcpy { };
+            snow-updater = pkgs.callPackage ./scripts/default.nix { };
+          };
+        };
     };
 }
