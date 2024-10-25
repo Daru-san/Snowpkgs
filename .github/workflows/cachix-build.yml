@@ -4,7 +4,6 @@ on:
     secrets:
       CACHIX_AUTH_TOKEN:
         required: false
-
 jobs:
   build:
     strategy:
@@ -13,14 +12,14 @@ jobs:
           - bridge-editor
           - kronkhite
           - valent
-          - yoke 
+          - yoke
           - poketex
-          - trashy 
+          - trashy
           - waydroid-script
           - snow-updater
           - gh-download
           - qtscrcpy
-
+          - rqbit
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -31,5 +30,4 @@ jobs:
         with:
           name: snowy-cache
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-
       - run: nix build '.?submodules=1#${{ matrix.package }}'
