@@ -73,7 +73,7 @@ let
 
     src = desktop-src;
 
-    cargoHash = "sha256-A4gbNb3LWADyZ81cGT+55syPKMJwQsBCD4KvjO0OHfs=";
+    cargoHash = "sha256-qeFrfXGfiznbGp4nxyeDxPz7zOheoSWyLZ0n0GKgiA8=";
 
     sourceRoot = "${src.name}/desktop/src-tauri";
 
