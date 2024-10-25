@@ -43,6 +43,7 @@
             pokeshell = pkgs.callPackage ./packages/pokeshell { };
             mangayomi = pkgs.callPackage ./packages/mangayomi { };
             kronkhite = pkgs.callPackage ./packages/krohnkite { };
+            rqbit = pkgs.callPackage ./packages/rqbit { };
             valent = pkgs.callPackage ./packages/valent { stdenv = pkgs.clangStdenv; };
             yoke = pkgs.callPackage ./packages/yoke { };
             poketex = pkgs.callPackage ./packages/poketex { };
