@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    cachix-push.url = "github:juspay/cachix-push";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
@@ -12,11 +11,9 @@
       self,
       nixpkgs,
       flake-parts,
-      cachix-push,
       ...
     }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ inputs.cachix-push.flakeModule ];
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -31,26 +28,6 @@
           ...
         }:
         {
-          cachix-push = {
-            cacheName = "snowy-cache";
-            pathsToCache = {
-              devshell = self'.devShells.default;
-              inherit (self'.packages)
-                bridge-editor
-                gh-download
-                pokeshell
-                kronkhite
-                valent
-                yoke
-                poketex
-                waydroid-script
-                trashy
-                qtscrcpy
-                snow-updater
-                ;
-            };
-          };
-
           formatter = pkgs.nixfmt-rfc-style;
 
           devShells.default = pkgs.mkShell {
