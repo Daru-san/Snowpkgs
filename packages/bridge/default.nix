@@ -8,7 +8,7 @@
   cargo-tauri,
   pkg-config,
   gsettings-desktop-schemas,
-  webkitgtk,
+  webkitgtk_4_0,
   gtk3,
   openssl,
 }:
@@ -82,7 +82,7 @@ rustPlatform.buildRustPackage {
     gsettings-desktop-schemas
     gtk3
     openssl
-    webkitgtk
+    webkitgtk_4_0
   ];
 
   preConfigure = ''
