@@ -2,14 +2,14 @@
 
 My custom flake repo with a few packages I use that aren't found in the nixpkgs repo.
 
-Most of these packages are pushed to a binary cache, so manually building is not necessary
+Most of these packages are pushed to a binary cache, so manually building is not
+necessary
 
 New packages added every once in a while
 
 ## Available packages
 
 <!--markdownlint-disable-->
-
 | Package                               | Description                                                                                             | url                                             |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
 | Bridge _(attribute is bridge-editor)_ | A minecraft addon IDE                                                                                   | <https://bridge-core.app/>                      |
@@ -22,7 +22,7 @@ New packages added every once in a while
 | Trashy (updated upstream)             | A nice shell alternative to the rm command                                                              | <https://github.com/oberblastmeister/trashy>    |
 | waydroid-script                       | A script for waydroid with cool features like enabling root access                                      | <https://github.com/casualsnek/waydroid_script> |
 | QtScrcpy                              | A GUI frontend for [scrcpy](https://github.com/Genymobile/scrcpy) with plenty of features, made with qt | <https://github.com/barry-ran/QtScrcpy>         |
-
+| rqbit (Testing desktop app)| A extensive torrent client for the terminal, with a built-in web UI. Written in rust | <https://github.com/ikatson/rqbit> |
 <!--markdownlint-restore-->
 
 ## Usage
@@ -97,5 +97,4 @@ Use the binary caches to prevent building manually
     ];
   };
 }
-
 ```
