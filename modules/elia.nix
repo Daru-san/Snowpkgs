@@ -11,6 +11,7 @@ let
     mkEnableOption
     enum
     mkIf
+    literalExpression
     ;
   inherit (types)
     str
@@ -31,55 +32,33 @@ in
       '';
     };
     settings = {
-      default_model = mkOption {
-        default = "gpt-4o";
-        type = str;
-        example = "gemini-1.5-flash-latest";
-        description = ''
-          The ID or name of the model that is selected by default on launch
-        '';
-      };
-      system_prompt = mkOption {
-        default = "";
-        type = str;
-        description = ''
-          System prompt to start on launch
-        '';
-      };
-      theme = mkOption {
-        default = "galaxy";
-        example = "alpine";
-        type = enum [
-          "nebula"
-          "cobalt"
-          "twilight"
-          "hacker"
-          "alpine"
-          "galaxy"
-          "nautilus"
-          "monokai"
-          "textual"
-        ];
-        description = ''
-          Theme for the app.
-        '';
-      };
-      message_code_theme = mkOption {
-        default = "monokai";
-        example = "dracula";
-        description = ''
-          Change the syntax highlighting theme of code in messages.
-          Choose from https://pygments.org/styles/
-        '';
-      };
-      models = mkOption {
-        type = listOf submodule;
-        visible = false;
-        default = [ ];
-        description = ''
-          List of models enabled for the app
-        '';
-      };
+      type = tomlFormat.type;
+      default = { };
+      example = literalExpression ''
+        {
+          default_model = "gemini-main";
+          theme = "nautilus";
+          models = [
+            {
+              id = "gemini-main";
+              name = "gemini/gemini-1.5-flash-latest";
+              display_name = "Gemini Flash";
+            }
+            {
+              id = "gemini-2";
+              name = "gemini/gemini-1.5-pro-latest";
+              display_name = "Gemini Pro";
+            }
+          ];
+        }
+      '';
+      description = ''
+        Configuration file written to
+        {file} `$XDG_CONFIG_HOME/elia/config.toml`
+
+        See <https://github.com/darrenburns/elia?tab=readme-ov-file#configuration>
+        for full options list
+      '';
     };
   };
   config = mkIf cfg.enable {
