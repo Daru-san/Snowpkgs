@@ -83,8 +83,9 @@ let
     '';
 
     postPatch = ''
-      rm tauri.conf.json
-      cp ${./tauri.conf.json} tauri.conf.json
+      substituteInPlace ./tauri.conf.json \
+        --replace-fail '"distDir": "../dist",' '"distDir": "dist",' \
+        --replace-fail '"beforeBuildCommand": "npm run build",' '"beforeBuildCommand": "",'
     '';
 
     nativeBuildInputs = [
