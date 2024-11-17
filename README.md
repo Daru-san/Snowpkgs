@@ -21,7 +21,6 @@ New packages added every once in a while
 | Poketex                               | A pokedex for the terminal, written in rust                                                             | <https://github.com/ckaznable/poketex>          |
 | Trashy (updated upstream)             | A nice shell alternative to the rm command                                                              | <https://github.com/oberblastmeister/trashy>    |
 | waydroid-script                       | A script for waydroid with cool features like enabling root access                                      | <https://github.com/casualsnek/waydroid_script> |
-| QtScrcpy                              | A GUI frontend for [scrcpy](https://github.com/Genymobile/scrcpy) with plenty of features, made with qt | <https://github.com/barry-ran/QtScrcpy>         |
 | rqbit (Testing desktop app)| A extensive torrent client for the terminal, with a built-in web UI. Written in rust | <https://github.com/ikatson/rqbit> |
 <!--markdownlint-restore-->
 
