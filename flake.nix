@@ -19,11 +19,20 @@
         "x86_64-linux"
         "aarch64-linux"
       ];
-      flake = {
-        homeManagerModules = {
-          elia = flake-parts.lib.importApply ./modules/elia.nix { inherit self; };
+      flake =
+        { withSystem, ... }:
+        {
+          homeManagerModules = {
+            elia =
+              { pkgs, ... }:
+              {
+                imports = ./modules/elia.nix;
+                programs.elia.package = withSystem pkgs.stdenv.hostPlatform.system (
+                  { config, ... }: config.packages.elia
+                );
+              };
+          };
         };
-      };
       perSystem =
         {
           config,
