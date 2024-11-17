@@ -31,7 +31,7 @@ in
         Elia package to use
       '';
     };
-    settings = {
+    settings = mkOption {
       type = tomlFormat.type;
       default = { };
       example = literalExpression ''
