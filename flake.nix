@@ -3,47 +3,55 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs =
-    {
-      self,
+    inputs@{
+      flake-parts,
       nixpkgs,
-    }@inputs:
-    let
-      genSystems = nixpkgs.lib.genAttrs [
+      self,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ flake-parts.flakeModules.easyOverlay ];
+      systems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
-      pkgsFor = nixpkgs.legacyPackages;
-    in
-    {
-      overlays.default = _: prev: {
-        bridge-editor = prev.callPackage ./packages/bridge { };
-        gh-download = prev.callPackage ./packages/gh-download { };
-        pokeshell = prev.callPackage ./packages/pokeshell { };
-        mangayomi = prev.callPackage ./packages/mangayomi { };
-        kronkhite = prev.callPackage ./packages/krohnkite { };
-        valent = prev.callPackage ./packages/valent { stdenv = prev.clangStdenv; };
-        yoke = prev.callPackage ./packages/yoke { };
-        poketex = prev.callPackage ./packages/poketex { };
-        waydroid-script = prev.callPackage ./packages/waydroid-script { };
-        trashy = prev.callPackage ./packages/trashy { };
-        rqbit-testing = prev.callPackage ./packages/rqbit { };
-        elia = prev.callPackage ./packages/elia { };
-        snow-updater = prev.callPackage ./scripts/default.nix { };
+      flake = {
+        homeManagerModules = {
+          elia = flake-parts.lib.importApply ./modules/elia.nix { inherit inputs; };
+        };
       };
-
-      homeManagerModules = {
-        elia = import ./modules/elia.nix { inherit inputs; };
-      };
-
-      devShells = genSystems (system: {
-        default = pkgsFor.${system}.mkShell { packages = [ self.packages.${system}.snow-updater ]; };
-      });
-
-      packages = genSystems (system: self.overlays.default null pkgsFor.${system});
-
-      formatter = genSystems (system: pkgsFor.${system}.nixfmt-rfc-style);
+      perSystem =
+        {
+          config,
+          pkgs,
+          ...
+        }:
+        {
+          overlayAttrs = {
+            inherit (config) packages;
+          };
+          devShells.default = pkgs.mkShellNoCC {
+            packages = [ config.packages.snow-updater ];
+          };
+          packages = {
+            bridge-editor = pkgs.callPackage ./packages/bridge { };
+            gh-download = pkgs.callPackage ./packages/gh-download { };
+            pokeshell = pkgs.callPackage ./packages/pokeshell { };
+            mangayomi = pkgs.callPackage ./packages/mangayomi { };
+            kronkhite = pkgs.callPackage ./packages/krohnkite { };
+            valent = pkgs.callPackage ./packages/valent { stdenv = pkgs.clangStdenv; };
+            yoke = pkgs.callPackage ./packages/yoke { };
+            poketex = pkgs.callPackage ./packages/poketex { };
+            waydroid-script = pkgs.callPackage ./packages/waydroid-script { };
+            trashy = pkgs.callPackage ./packages/trashy { };
+            rqbit-testing = pkgs.callPackage ./packages/rqbit { };
+            elia = pkgs.callPackage ./packages/elia { };
+            snow-updater = pkgs.callPackage ./scripts/default.nix { };
+          };
+        };
     };
 }
