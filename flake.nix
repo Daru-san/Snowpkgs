@@ -9,7 +9,7 @@
     {
       self,
       nixpkgs,
-    }:
+    }@inputs:
     let
       genSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
@@ -30,7 +30,12 @@
         waydroid-script = prev.callPackage ./packages/waydroid-script { };
         trashy = prev.callPackage ./packages/trashy { };
         rqbit-testing = prev.callPackage ./packages/rqbit { };
+        elia = prev.callPackage ./packages/elia { };
         snow-updater = prev.callPackage ./scripts/default.nix { };
+      };
+
+      homeManagerModules = {
+        elia = import ./modules/elia.nix { inherit inputs; };
       };
 
       devShells = genSystems (system: {
