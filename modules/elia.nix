@@ -1,4 +1,3 @@
-self:
 {
   pkgs,
   lib,
@@ -26,7 +25,6 @@ in
   options.programs.elia = {
     enable = mkEnableOption "The elia app";
     package = mkOption {
-      default = self.packages.${pkgs.system}.elia;
       type = package;
       description = ''
         Elia package to use
