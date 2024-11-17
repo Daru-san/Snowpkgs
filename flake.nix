@@ -28,6 +28,7 @@
         {
           config,
           pkgs,
+          final,
           ...
         }:
         {
@@ -52,6 +53,7 @@
             elia = pkgs.callPackage ./packages/elia { };
             snow-updater = pkgs.callPackage ./scripts/default.nix { };
           };
+          formatter = pkgs.nixfmt-rfc-style;
         };
     };
 }
