@@ -21,7 +21,7 @@
       ];
       flake = {
         homeManagerModules = {
-          elia = flake-parts.lib.importApply ./modules/elia.nix { inherit inputs; };
+          elia = flake-parts.lib.importApply ./modules/elia.nix { inherit self; };
         };
       };
       perSystem =
