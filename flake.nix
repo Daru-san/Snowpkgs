@@ -26,7 +26,7 @@
             elia =
               { pkgs, ... }:
               {
-                imports = ./modules/elia.nix;
+                imports = [ ./modules/elia.nix ];
                 programs.elia.package = withSystem pkgs.stdenv.hostPlatform.system (
                   { config, ... }: config.packages.elia
                 );
