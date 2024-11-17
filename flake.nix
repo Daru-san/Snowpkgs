@@ -28,13 +28,10 @@
         {
           config,
           pkgs,
-          final,
           ...
         }:
         {
-          overlayAttrs = {
-            inherit (config) packages;
-          };
+          overlayAttrs = config.packages;
           devShells.default = pkgs.mkShellNoCC {
             packages = [ config.packages.snow-updater ];
           };
