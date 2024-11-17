@@ -5,7 +5,7 @@
   fetchFromGitHub,
   rustPlatform,
   nodejs_20,
-  cargo-tauri,
+  cargo-tauri_1,
   pkg-config,
   gsettings-desktop-schemas,
   webkitgtk_4_0,
@@ -74,7 +74,7 @@ rustPlatform.buildRustPackage {
 
   nativeBuildInputs = [
     wrapGAppsHook3
-    cargo-tauri
+    cargo-tauri_1
     pkg-config
   ];
 
