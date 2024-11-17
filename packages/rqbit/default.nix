@@ -6,7 +6,7 @@
   pkg-config,
   openssl,
   darwin,
-  cargo-tauri,
+  cargo-tauri_1,
   buildNpmPackage,
   nodejs_20,
   glib,
@@ -84,12 +84,12 @@ let
 
     postPatch = ''
       substituteInPlace ./tauri.conf.json \
-        --replace-fail '"frontendDist": "../dist",' '"frontendDist": "dist",' \
+        --replace-fail '"distDir": "../dist",' '"distDir": "dist",' \
         --replace-fail '"beforeBuildCommand": "npm run build",' '"beforeBuildCommand": "",'
     '';
 
     nativeBuildInputs = [
-      cargo-tauri
+      cargo-tauri_1
     ] ++ lib.optionals stdenv.isLinux [ pkg-config ];
 
     buildPhase = ''
