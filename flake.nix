@@ -13,53 +13,52 @@
       self,
       ...
     }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ flake-parts.flakeModules.easyOverlay ];
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-      ];
-      flake =
-        { withSystem, ... }:
-        {
-          homeManagerModules = {
-            elia =
-              { pkgs, ... }:
-              {
-                imports = [ ./modules/elia.nix ];
-                programs.elia.package = withSystem pkgs.stdenv.hostPlatform.system (
-                  { config, ... }: config.packages.elia
-                );
-              };
-          };
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { withSystem, ... }:
+      {
+        imports = [ flake-parts.flakeModules.easyOverlay ];
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+        ];
+        flake = {
+          homeManagerModules.default =
+            { pkgs, ... }:
+            {
+              imports = [ ./modules/elia.nix ];
+              programs.elia.package = withSystem pkgs.stdenv.hostPlatform.system (
+                { config, ... }: config.packages.elia
+              );
+            };
         };
-      perSystem =
-        {
-          config,
-          pkgs,
-          ...
-        }:
-        {
-          overlayAttrs = config.packages;
-          devShells.default = pkgs.mkShellNoCC {
-            packages = [ config.packages.snow-updater ];
+        perSystem =
+          {
+            config,
+            pkgs,
+            ...
+          }:
+          {
+            overlayAttrs = config.packages;
+            devShells.default = pkgs.mkShellNoCC {
+              packages = [ config.packages.snow-updater ];
+            };
+            packages = {
+              bridge-editor = pkgs.callPackage ./packages/bridge { };
+              gh-download = pkgs.callPackage ./packages/gh-download { };
+              pokeshell = pkgs.callPackage ./packages/pokeshell { };
+              mangayomi = pkgs.callPackage ./packages/mangayomi { };
+              kronkhite = pkgs.callPackage ./packages/krohnkite { };
+              valent = pkgs.callPackage ./packages/valent { stdenv = pkgs.clangStdenv; };
+              yoke = pkgs.callPackage ./packages/yoke { };
+              poketex = pkgs.callPackage ./packages/poketex { };
+              waydroid-script = pkgs.callPackage ./packages/waydroid-script { };
+              trashy = pkgs.callPackage ./packages/trashy { };
+              rqbit-testing = pkgs.callPackage ./packages/rqbit { };
+              elia = pkgs.callPackage ./packages/elia { };
+              snow-updater = pkgs.callPackage ./scripts/default.nix { };
+            };
+            formatter = pkgs.nixfmt-rfc-style;
           };
-          packages = {
-            bridge-editor = pkgs.callPackage ./packages/bridge { };
-            gh-download = pkgs.callPackage ./packages/gh-download { };
-            pokeshell = pkgs.callPackage ./packages/pokeshell { };
-            mangayomi = pkgs.callPackage ./packages/mangayomi { };
-            kronkhite = pkgs.callPackage ./packages/krohnkite { };
-            valent = pkgs.callPackage ./packages/valent { stdenv = pkgs.clangStdenv; };
-            yoke = pkgs.callPackage ./packages/yoke { };
-            poketex = pkgs.callPackage ./packages/poketex { };
-            waydroid-script = pkgs.callPackage ./packages/waydroid-script { };
-            trashy = pkgs.callPackage ./packages/trashy { };
-            rqbit-testing = pkgs.callPackage ./packages/rqbit { };
-            elia = pkgs.callPackage ./packages/elia { };
-            snow-updater = pkgs.callPackage ./scripts/default.nix { };
-          };
-          formatter = pkgs.nixfmt-rfc-style;
-        };
-    };
+      }
+    );
 }
