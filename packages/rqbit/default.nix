@@ -84,7 +84,7 @@ let
 
     postPatch = ''
       substituteInPlace ./tauri.conf.json \
-        --replace-fail '"distDir": "../dist",' '"distDir": "dist",' \
+        --replace-fail '"frontendDist": "../dist",' '"frontendDist": "dist",' \
         --replace-fail '"beforeBuildCommand": "npm run build",' '"beforeBuildCommand": "",'
     '';
 
