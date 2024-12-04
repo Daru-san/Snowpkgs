@@ -6,20 +6,19 @@
 
 python3Packages.buildPythonApplication rec {
   pname = "elia";
-  version = "1.9.0";
+  version = "1.10.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "darrenburns";
     repo = "elia";
     rev = "refs/tags/${version}";
-    hash = "sha256-tf5FU1k140g84/BxruFXQS2h3kL1hSCvDv9kljPI410=";
+    hash = "sha256-FCdY2mS80ZQFLPlcJyT0CGP4dyo766CJUg+10MGFPeU=";
   };
 
-  postPatch = ''
-    substituteInPlace ./pyproject.toml \
-      --replace-fail '"textual[syntax]==0.79.1",' '"textual[syntax]>=0.79.1",'
-  '';
+  pythonRelaxDeps = [
+    "textual"
+  ];
 
   build-system = [ python3Packages.hatchling ];
 
@@ -29,6 +28,7 @@ python3Packages.buildPythonApplication rec {
     click-default-group
     google-generativeai
     greenlet
+    pydantic
     humanize
     litellm
     pyperclip
@@ -39,12 +39,12 @@ python3Packages.buildPythonApplication rec {
 
   pythonImportsCheck = [ "elia_chat" ];
 
-  meta = with lib; {
+  meta = {
     description = "Snappy, keyboard-centric terminal user interface for interacting with large language models";
     homepage = "https://github.com/darrenburns/elia";
     changelog = "https://github.com/darrenburns/elia/releases/tag/${version}";
-    license = licenses.asl20;
-    maintainers = with maintainers; [ daru-san ];
+    license = lib.licenses.asl20;
+    maintainers = with lib.maintainers; [ daru-san ];
     mainProgram = "elia";
   };
 }
