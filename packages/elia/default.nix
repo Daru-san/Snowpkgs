@@ -35,7 +35,7 @@ python3Packages.buildPythonApplication rec {
         owner = "Textualize";
         repo = "textual";
         rev = "v0.79.1";
-        hash = "sha256-hJ7grdrM4c+Q+m0T4kzeHQxPFo8HtmoqxbXm4cxu7/g=";
+        hash = "sha256-laGhjlsFWcSgDnTjLSJMdfM6BRZTezIzFSsyVUhpr3Q=";
       };
     })
   ];
