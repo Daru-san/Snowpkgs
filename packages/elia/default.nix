@@ -13,12 +13,8 @@ python3Packages.buildPythonApplication rec {
     owner = "darrenburns";
     repo = "elia";
     rev = "refs/tags/${version}";
-    hash = "sha256-FCdY2mS80ZQFLPlcJyT0CGP4dyo766CJUg+10MGFPeU=";
+    hash = "sha256-2CKArTo/frYLTI8qFWpkMZzpDoLDPttmMy6ZQpBDXkY=";
   };
-
-  pythonRelaxDeps = [
-    "textual"
-  ];
 
   build-system = [ python3Packages.hatchling ];
 
@@ -34,7 +30,14 @@ python3Packages.buildPythonApplication rec {
     pyperclip
     sqlmodel
     xdg-base-dirs
-    textual
+    (textual.overrideAttrs {
+      src = fetchFromGitHub {
+        owner = "Textualize";
+        repo = "textual";
+        rev = "v0.79.1";
+        hash = "sha256-hJ7grdrM4c+Q+m0T4kzeHQxPFo8HtmoqxbXm4cxu7/g=";
+      };
+    })
   ];
 
   pythonImportsCheck = [ "elia_chat" ];
