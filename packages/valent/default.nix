@@ -32,7 +32,7 @@ stdenv.mkDerivation rec {
     repo = "valent";
     rev = "b658df0d4fe485f9f5caa0421f9882d374f89649";
     fetchSubmodules = true;
-    hash = "sha256-/Wdlh9K1ud6BhSt4ixixq34Sw1ZP25zJXvChwGQqIvw=";
+    hash = "sha256-8ZM0Wa0ZYGSC8ECPfWG8XPO4u9TqCSp8GNJ+kH6C4CM=";
   };
 
   nativeBuildInputs = [
