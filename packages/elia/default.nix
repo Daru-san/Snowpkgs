@@ -12,8 +12,8 @@ python3Packages.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "darrenburns";
     repo = "elia";
-    rev = "refs/tags/${version}";
-    hash = "sha256-2CKArTo/frYLTI8qFWpkMZzpDoLDPttmMy6ZQpBDXkY=";
+    rev = version;
+    hash = "sha256-FCdY2mS80ZQFLPlcJyT0CGP4dyo766CJUg+10MGFPeU=";
   };
 
   build-system = [ python3Packages.hatchling ];
