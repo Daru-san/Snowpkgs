@@ -46,7 +46,6 @@
               bridge-editor = pkgs.callPackage ./packages/bridge { };
               gh-download = pkgs.callPackage ./packages/gh-download { };
               pokeshell = pkgs.callPackage ./packages/pokeshell { };
-              mangayomi = pkgs.callPackage ./packages/mangayomi { };
               kronkhite = pkgs.callPackage ./packages/krohnkite { };
               valent = pkgs.callPackage ./packages/valent { stdenv = pkgs.clangStdenv; };
               yoke = pkgs.callPackage ./packages/yoke { };
