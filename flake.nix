@@ -52,7 +52,10 @@
               poketex = pkgs.callPackage ./packages/poketex { };
               waydroid-script = pkgs.callPackage ./packages/waydroid-script { };
               trashy = pkgs.callPackage ./packages/trashy { };
-              rqbit-testing = pkgs.callPackage ./packages/rqbit { };
+
+              # Waiting for upstream to update tauri version with next release
+              # rqbit-testing = pkgs.callPackage ./packages/rqbit { };
+
               elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
             };
