@@ -3,7 +3,17 @@
   python3Packages,
   fetchFromGitHub,
 }:
-
+let
+  textual = python3Packages.textual.overrideAttrs rec {
+    version = "0.79.1";
+    src = fetchFromGitHub {
+      owner = "Textualize";
+      repo = "textual";
+      rev = "v${version}";
+      hash = "sha256-laGhjlsFWcSgDnTjLSJMdfM6BRZTezIzFSsyVUhpr3Q=";
+    };
+  };
+in
 python3Packages.buildPythonApplication rec {
   pname = "elia";
   version = "1.10.0";
@@ -12,33 +22,31 @@ python3Packages.buildPythonApplication rec {
   src = fetchFromGitHub {
     owner = "darrenburns";
     repo = "elia";
-    rev = version;
-    hash = "sha256-FCdY2mS80ZQFLPlcJyT0CGP4dyo766CJUg+10MGFPeU=";
+    rev = "refs/tags/${version}";
+    hash = "sha256-2CKArTo/frYLTI8qFWpkMZzpDoLDPttmMy6ZQpBDXkY=";
   };
+
+  pythonRelaxDeps = [
+    "textual"
+  ];
 
   build-system = [ python3Packages.hatchling ];
 
-  dependencies = with python3Packages; [
-    aiosqlite
-    click
-    click-default-group
-    google-generativeai
-    greenlet
-    pydantic
-    humanize
-    litellm
-    pyperclip
-    sqlmodel
-    xdg-base-dirs
-    (textual.overrideAttrs {
-      src = fetchFromGitHub {
-        owner = "Textualize";
-        repo = "textual";
-        rev = "v0.79.1";
-        hash = "sha256-laGhjlsFWcSgDnTjLSJMdfM6BRZTezIzFSsyVUhpr3Q=";
-      };
-    })
-  ];
+  dependencies =
+    [ textual ]
+    ++ (with python3Packages; [
+      aiosqlite
+      click
+      click-default-group
+      google-generativeai
+      greenlet
+      pydantic
+      humanize
+      litellm
+      pyperclip
+      sqlmodel
+      xdg-base-dirs
+    ]);
 
   pythonImportsCheck = [ "elia_chat" ];
 
