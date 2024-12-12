@@ -52,9 +52,7 @@
               poketex = pkgs.callPackage ./packages/poketex { };
               waydroid-script = pkgs.callPackage ./packages/waydroid-script { };
               trashy = pkgs.callPackage ./packages/trashy { };
-              nushellPlugins = {
-                periodic-table = pkgs.callPackage ./packages/nushell-periodic-table/default.nix { };
-              };
+              nu-periodic-table = pkgs.callPackage ./packages/nushell-periodic-table/default.nix { };
 
               # Waiting for upstream to update tauri version with next release
               # rqbit-testing = pkgs.callPackage ./packages/rqbit { };
