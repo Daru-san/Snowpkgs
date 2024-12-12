@@ -8,7 +8,7 @@
 }:
 
 rustPlatform.buildRustPackage rec {
-  pname = "nu-plugin-periodic-table";
+  pname = "nu_plugin_periodic_table";
   version = "0.2.9";
 
   src = fetchFromGitHub {
@@ -39,6 +39,6 @@ rustPlatform.buildRustPackage rec {
     changelog = "https://github.com/JosephTLyons/nu_plugin_periodic_table/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl3Only;
     maintainers = with lib.maintainers; [ daru-san ];
-    mainProgram = "nu-plugin-periodic-table";
+    mainProgram = "nu_plugin_periodic_table";
   };
 }
