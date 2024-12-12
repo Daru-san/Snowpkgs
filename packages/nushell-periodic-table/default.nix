@@ -18,7 +18,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-zeErTvjR4sQ0nKSc3KpMMxHZ1kl7h8+suRVWkuiNYZ4=";
   };
 
-  cargoHash = "sha256-BEeuoj8rC9VD1nKYjUEGFqwvdlIoDHH83sXgwU029dA=";
+  cargoHash = "sha256-6SoMhc1xRXdpzEM/LxagSqaoZhXy2GrkbPRvtd3ziNM=";
 
   cargoBuildFlags = [ "--package nu_plugin_periodic_table" ];
 
