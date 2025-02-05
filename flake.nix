@@ -57,7 +57,7 @@
               # Waiting for upstream to update tauri version with next release
               # rqbit-testing = pkgs.callPackage ./packages/rqbit { };
 
-              elia = pkgs.callPackage ./packages/elia { };
+              # elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
             };
             formatter = pkgs.nixfmt-rfc-style;
