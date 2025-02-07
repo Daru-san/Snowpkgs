@@ -6,37 +6,34 @@
   pkg-config,
   openssl,
   darwin,
-  cargo-tauri_1,
+  cargo-tauri,
   buildNpmPackage,
-  nodejs_20,
   glib,
   gtk3,
-  libsoup,
+  libsoup_2_4,
   webkitgtk_4_0,
   gobject-introspection,
 }:
 let
   pname = "rqbit";
 
-  version = "7.0.1";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "ikatson";
     repo = "rqbit";
-    rev = "v${version}";
-    hash = "sha256-Lt3HxK8fB1Xn2422wGkJ90muJjZ7r9ZHngGD/2tkaMM=";
+    tag = "v${version}";
+    hash = "sha256-5Z75YlKBELWhkPc9wUX/0VXbvmyEbBosrO4CEeHy4UY=";
   };
 
-  node-frontend = buildNpmPackage {
-    pname = "rqbit-frontend";
-
-    nodejs = nodejs_20;
+  webui = buildNpmPackage {
+    pname = "rqbit-webui";
 
     inherit version src;
 
     sourceRoot = "${src.name}/crates/librqbit/webui";
 
-    npmDepsHash = "sha256-VYPZXZx9rKLKZm5+d2wSVkoPLCQCffaeZVSi7mKRH/M=";
+    npmDepsHash = "sha256-vib8jpf7Jn1qv0m/dWJ4TbisByczNbtEd8hIM5ll2Q8=";
 
     installPhase = ''
       runHook preInstall
@@ -48,99 +45,118 @@ let
     '';
   };
 
-  desktop-src = stdenv.mkDerivation {
-    inherit src;
-    name = "rqbit";
+  rqbit-desktop =
+    let
+      desktop-frontend = buildNpmPackage {
+        pname = "rqbit-desktop";
 
-    installPhase = ''
-      mkdir -p $out
+        inherit version src;
 
-      cp -R $src/** $out/
+        sourceRoot = "${src.name}/desktop";
 
-      chmod -R a+rwx $out/*
+        npmDepsHash = "sha256-7qnhdKL5qykb4q5J+ciCjo2VZkYl0n03Txi2aQRUxYY=";
 
-      rm $out/crates/librqbit/build.rs
+        npmPackFlags = [ "--ignore-scripts" ];
 
-      mkdir -p $out/crates/librqbit/webui/dist
-      cp -R ${node-frontend}/dist/** $out/crates/librqbit/webui/dist
-    '';
-  };
+        installPhase = ''
+          runHook preInstall
 
-  rqbit-desktop = rustPlatform.buildRustPackage rec {
-    pname = "rqbit-desktop";
+          mkdir -p $out/dist
+          cp -r dist/** $out/dist
 
-    inherit version;
+          runHook postInstall
+        '';
+      };
 
-    src = desktop-src;
+      desktop-src = stdenv.mkDerivation {
+        inherit src;
+        name = "rqbit";
 
-    cargoHash = "sha256-qeFrfXGfiznbGp4nxyeDxPz7zOheoSWyLZ0n0GKgiA8=";
+        installPhase = ''
+          mkdir -p $out
 
-    sourceRoot = "${src.name}/desktop/src-tauri";
+          cp -R $src/** $out/
 
-    preConfigure = ''
-      mkdir -p dist
-      cp -R ${node-frontend}/dist/** dist
-    '';
+          chmod -R a+rwx $out/*
 
-    postPatch = ''
-      substituteInPlace ./tauri.conf.json \
-        --replace-fail '"distDir": "../dist",' '"distDir": "dist",' \
-        --replace-fail '"beforeBuildCommand": "npm run build",' '"beforeBuildCommand": "",'
-    '';
+          rm $out/crates/librqbit/build.rs
 
-    nativeBuildInputs = [
-      cargo-tauri_1
-    ] ++ lib.optionals stdenv.isLinux [ pkg-config ];
+          mkdir -p $out/crates/librqbit/webui/dist
+          cp -R ${desktop-frontend}}/dist/** $out/crates/librqbit/webui/dist
+        '';
+      };
 
-    buildPhase = ''
-      runHook preBuild
+    in
+    rustPlatform.buildRustPackage rec {
+      pname = "rqbit-desktop";
 
-      cargo tauri build -b deb
+      inherit version;
 
-      runHook postBuild
-    '';
+      src = desktop-src;
 
-    installPhase = ''
-      runHook preInstall
+      cargoHash = "sha256-qeFrfXGfiznbGp4nxyeDxPz7zOheoSWyLZ0n0GKgiA8=";
 
-      mkdir -p $out/{bin,share}
+      sourceRoot = "${src.name}/desktop/src-tauri";
 
-      cp target/release/bundle/deb/rqbit-desktop_${version}_amd64/data/usr/bin/rqbit-desktop $out/bin/rqbit-desktop
-      cp -R target/release/bundle/deb/rqbit-desktop_${version}_amd64/data/usr/share/** $out/share/
+      preConfigure = ''
+        mkdir -p dist
+        cp -R ${desktop-frontend}/dist/** dist
+      '';
 
-      runHook postInstall
-    '';
+      postPatch = ''
+        substituteInPlace ./tauri.conf.json \
+          --replace-fail '"distDir": "../dist",' '"distDir": "dist",' \
+          --replace-fail '"beforeBuildCommand": "npm run build",' '"beforeBuildCommand": "",'
+      '';
 
-    buildInputs =
-      [
+      nativeBuildInputs = [
+        cargo-tauri
+      ] ++ lib.optionals stdenv.isLinux [ pkg-config ];
+
+      buildPhase = ''
+        runHook preBuild
+
+        cargo tauri build -b deb
+
+        runHook postBuild
+      '';
+
+      installPhase = ''
+        runHook preInstall
+
+        mkdir -p $out/{bin,share}
+
+        cp target/release/bundle/deb/rqbit-desktop_${version}_amd64/data/usr/bin/rqbit-desktop $out/bin/rqbit-desktop
+        cp -R target/release/bundle/deb/rqbit-desktop_${version}_amd64/data/usr/share/** $out/share/
+
+        runHook postInstall
+      '';
+
+      buildInputs = [
         glib
         gtk3
-        libsoup
+        libsoup_2_4
         webkitgtk_4_0
         gobject-introspection
-      ]
-      ++ lib.optionals stdenv.isLinux [ openssl ]
-      ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.SystemConfiguration ];
+      ] ++ lib.optionals stdenv.isLinux [ openssl ];
 
-    doCheck = false;
-  };
+      doCheck = false;
+    };
 in
 rustPlatform.buildRustPackage {
   inherit pname version src;
 
-  cargoHash = "sha256-esDUzzVm5J8fKftBfk5StJzN1YzLa1p0t7BsoxzrowI=";
+  cargoHash = "sha256-cJRv+b780daYeiAFnbhYoYNwOy9GL8x9Ve6XxG95QpU=";
 
   nativeBuildInputs = lib.optionals stdenv.isLinux [
     pkg-config
   ];
 
-  buildInputs =
-    lib.optionals stdenv.isLinux [ openssl ]
-    ++ lib.optionals stdenv.isDarwin [ darwin.apple_sdk.frameworks.SystemConfiguration ];
+  buildInputs = lib.optionals stdenv.isLinux [ openssl ];
 
   preConfigure = ''
     mkdir -p crates/librqbit/webui/dist
-    cp -R ${node-frontend}/dist/** crates/librqbit/webui/dist
+    cp -R ${webui}/dist/** crates/librqbit/webui/dist
   '';
 
   postPatch = ''

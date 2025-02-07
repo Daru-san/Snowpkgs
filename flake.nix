@@ -55,7 +55,7 @@
               nu-periodic-table = pkgs.callPackage ./packages/nushell-periodic-table/default.nix { };
 
               # Waiting for upstream to update tauri version with next release
-              # rqbit-testing = pkgs.callPackage ./packages/rqbit { };
+              rqbit-testing = pkgs.callPackage ./packages/rqbit { };
 
               # elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
