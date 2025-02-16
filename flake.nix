@@ -59,6 +59,8 @@
 
               # elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
+
+              pasls = pkgs.callPackage ./packages/pasls { };
             };
             formatter = pkgs.nixfmt-rfc-style;
           };
