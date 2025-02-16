@@ -36,23 +36,11 @@ stdenv.mkDerivation {
 
     lazbuild $BUILD/pasls.lpi --lazarusdir=${lazarus}/share/lazarus
 
-    mkdir $out
+    mkdir -p $out/bin
 
-    cp $BUILD/lib/${pkgs.system}/pasls $out/pasls
+    cp -r $BUILD/lib/${pkgs.system}/* $out/bin/
 
     runHook postBuild
-  '';
-
-  installPhase = ''
-    runHook preInstall
-
-    mkdir $out/bin
-
-    install -Dm775 $out/pasls $out/bin/pasls
-
-    rm $out/pasls
-
-    runHook postInstall
   '';
 
   meta = {
