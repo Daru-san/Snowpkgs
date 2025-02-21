@@ -38,10 +38,20 @@ let
 
     dontNpmBuild = true;
 
-    preBuild = ''
+    patchPhase = ''
+      runHook prePatch
+
+      mkdir -p src/
+
       cp "${
         google-fonts.override { fonts = [ "Inter" ]; }
-      }/share/fonts/truetype/Inter[wght].ttf" src/app/Inter.ttf
+      }/share/fonts/truetype/Inter[opsz,wght].ttf" src/app/Inter.ttf
+
+      substituteInPlace ./src/app/layout.tsx \
+        --replace-quiet 'import { Inter } from "next/font/google";' 'import localFont from "next/font/local";' \
+        --replace-quiet 'const inter = Inter({ subsets: ["latin"] });' 'const inter = localFont({ src: './Inter.ttf', subsets: ["latin"] });'
+
+      runHook postPatch
     '';
 
     buildPhase = ''
