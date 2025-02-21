@@ -66,7 +66,8 @@ let
       runHook preInstall
 
       mkdir -p $out/web
-      cp -r $src/out $out/web
+
+      cp -r $sourceRoot/out/* $out/web
 
       runHook postInstall
     '';
@@ -103,6 +104,16 @@ let
             npm run build:desktop
 
             runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+
+            mkdir -p $out/web
+
+            cp -r $sourceRoot/out-desktop/* $out/web
+
+            runHook postInstall
           '';
         });
       in
