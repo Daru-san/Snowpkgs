@@ -15,7 +15,7 @@
   nix-update-script,
   google-fonts,
   gobject-introspection,
-  libayatana-appindicator,
+  libappindicator-gtk3,
   withDesktop ? true,
 }:
 let
@@ -95,8 +95,8 @@ let
       gtk3
       openssl
       webkitgtk_4_1
-      libayatana-appindicator
       gobject-introspection
+      libappindicator-gtk3
     ];
 
     postPatch = ''
