@@ -48,8 +48,8 @@ let
       }/share/fonts/truetype/Inter[opsz,wght].ttf" src/app/Inter.ttf
 
       substituteInPlace ./src/app/layout.tsx \
-        --replace-quiet 'import { Inter } from "next/font/google";' 'import localFont from "next/font/local";' \
-        --replace-quiet 'const inter = Inter({ subsets: ["latin"] });' 'const inter = localFont({ src: './Inter.ttf', subsets: ["latin"] });'
+        --replace-quiet 'import { Inter } from "next/font/google"' 'import localFont from "next/font/local"' \
+        --replace-quiet 'const inter = Inter({ subsets: ["latin"] })' 'const inter = localFont({ src: './Inter.ttf', subsets: ["latin"] })'
 
       runHook postPatch
     '';
