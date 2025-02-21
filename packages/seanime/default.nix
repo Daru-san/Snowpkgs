@@ -65,9 +65,9 @@ let
     installPhase = ''
       runHook preInstall
 
-      mkdir -p $out
+      mkdir -p $out/web
 
-      cp -r $sourceRoot/out $out/web
+      cp -r out/* $out/web
 
       runHook postInstall
     '';
@@ -111,7 +111,7 @@ let
 
             mkdir -p $out/web
 
-            cp -r $sourceRoot/out-desktop/* $out/web
+            cp -r out-desktop/* $out/web
 
             runHook postInstall
           '';
