@@ -41,7 +41,7 @@ let
     preBuild = ''
       cp "${
         google-fonts.override { fonts = [ "Inter" ]; }
-      }/share/fonts/truetype/Inter[slnt,wght].ttf" src/app/Inter.ttf
+      }/share/fonts/truetype/Inter[wght].ttf" src/app/Inter.ttf
     '';
 
     buildPhase = ''
