@@ -11,9 +11,11 @@
   gsettings-desktop-schemas,
   gtk3,
   openssl,
-  webkitgtk_4_0,
+  webkitgtk_4_1,
   nix-update-script,
   google-fonts,
+  gobject-introspection,
+  libayatana-appindicator,
   withDesktop ? true,
 }:
 let
@@ -92,12 +94,21 @@ let
       gsettings-desktop-schemas
       gtk3
       openssl
-      webkitgtk_4_0
+      webkitgtk_4_1
+      libayatana-appindicator
+      gobject-introspection
     ];
 
-    preConfigure =
+    postPatch = ''
+      substituteInPlace ./tauri.conf.json \
+        --replace-quiet '"frontendDist": "../../web-desktop",' '"frontendDist": "web-desktop",' \
+    '';
+
+    TEST_DATADIR = "";
+
+    preBuild =
       let
-        web-desktop = seanime-web.overrideAttrs ({
+        web-desktop = seanime-web.overrideAttrs {
           buildPhase = ''
             runHook preBuild
 
@@ -115,20 +126,17 @@ let
 
             runHook postInstall
           '';
-        });
+        };
       in
       ''
         mkdir web-desktop
 
-        cp -R ${web-desktop}/out/** web-desktop/
+        cp -R ${web-desktop}/web/* web-desktop
 
-        cp ${seanime-server}/bin/seanime binaries/seanime
+        cp ${seanime-server}/bin/seanime binaries/seanime-x86_64-unknown-linux-gnu
       '';
 
-    postPatch = ''
-      substituteInPlace ./tauri.conf.json \
-        --replace-quiet '"frontendDist": "../../web-desktop",' '"frontendDist": "web-desktop",' \
-    '';
+    doCheck = false;
   };
 
   seanime-server = buildGoModule {
@@ -138,11 +146,16 @@ let
 
     vendorHash = "sha256-4liG/EB3KcOqUllTbcgFFGB0K473+7ZKfpQa/ODU+EI=";
 
-    preConfigure = ''
+    preBuild = ''
       mkdir web
 
-      cp -R ${seanime-web}/out/** web/
+      cp -R ${seanime-web}/web/** web/
+
+      #  .github scripts redeclare main
+      rm -rf .github
     '';
+
+    doCheck = false;
 
     ldflags = [
       "-s"
@@ -151,14 +164,17 @@ let
   };
 in
 stdenvNoCC.mkDerivation {
-  inherit pname version;
+  inherit pname version src;
 
   installPhase =
     ''
-      install Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
+      mkdir -p $out/bin
+
+      install -Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
     ''
     + lib.optionals withDesktop ''
-      cp -R ${seanime-desktop}/** out/
+      ls ${seanime-desktop}
+      cp -R ${seanime-desktop}/** $out/
     '';
 
   passthru = {
@@ -166,6 +182,7 @@ stdenvNoCC.mkDerivation {
     server = seanime-server;
     desktop = seanime-desktop;
   };
+
   passthru.updateScript = nix-update-script {
     extraArgs = [
       "--subpackage"
