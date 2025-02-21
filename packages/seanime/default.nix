@@ -1,4 +1,5 @@
 {
+  stdenvNoCC,
   lib,
   buildGoModule,
   fetchFromGitHub,
@@ -11,6 +12,7 @@
   gtk3,
   openssl,
   webkitgtk_4_0,
+  nix-update-script,
   withDesktop ? true,
 }:
 let
@@ -24,17 +26,43 @@ let
     hash = "sha256-aLKiUmT37pst2XoK+v84vcOtFT8VSdHrKlDekdKapJ4=";
   };
 
-  web-desktop = buildNpmPackage {
+  seanime-web = buildNpmPackage {
     pname = "seanime-web";
+
     inherit version src;
-    npmDepsHash = lib.fakeHash;
+
+    npmDepsHash = "sha256-9qyHaOJQFO0jquKpXUusznfGCaeU3LCSPiCzTdKl20Y=";
+
     sourceRoot = "${src.name}/seanime-web";
+
+    dontNpmBuild = true;
+
+    buildPhase = ''
+      runHook preBuild
+
+      npm run build
+
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/web
+      cp -r out/** $out/web
+
+      runHook postInstall
+    '';
   };
 
-  desktop-app = rustPlatform.buildRustPackage {
+  seanime-desktop = rustPlatform.buildRustPackage {
     pname = "seanime-desktop";
+
     inherit version src;
+
     sourceRoot = "${src.name}/seanime-desktop/src-tauri";
+
+    cargoHash = "sha256-Hs+IYhZ3Aw8jPJbo9i2/wFQzViueBdOTkj5P996W5pU=";
 
     nativeBuildInputs = [
       cargo-tauri
@@ -49,12 +77,25 @@ let
       webkitgtk_4_0
     ];
 
-    preConfigure = ''
-      mkdir web-desktop
-      cp -R ${web-desktop}/dist/** web-desktop
+    preConfigure =
+      let
+        web-desktop = seanime-web.overrideAttrs ({
+          buildPhase = ''
+            runHook preBuild
 
-      cp ${go-mod}/bin/seanime binaries/seanime
-    '';
+            npm run build:desktop
+
+            runHook postBuild
+          '';
+        });
+      in
+      ''
+        mkdir web-desktop
+
+        cp -R ${web-desktop}/out/** web-desktop/
+
+        cp ${seanime-server}/bin/seanime binaries/seanime
+      '';
 
     postPatch = ''
       substituteInPlace ./tauri.conf.json \
@@ -62,10 +103,18 @@ let
     '';
   };
 
-  go-mod = buildGoModule {
-    inherit pname src version;
+  seanime-server = buildGoModule {
+    pname = "seanime-server";
+
+    inherit src version;
 
     vendorHash = "sha256-4liG/EB3KcOqUllTbcgFFGB0K473+7ZKfpQa/ODU+EI=";
+
+    preConfigure = ''
+      mkdir web
+
+      cp -R ${seanime-web}/out/** web/
+    '';
 
     ldflags = [
       "-s"
@@ -73,17 +122,32 @@ let
     ];
   };
 in
-
-{
+stdenvNoCC.mkDerivation {
   inherit pname version;
 
   installPhase =
     ''
-      install Dm775 ${go-mod}/bin/seanime $out/bin/seanime
+      install Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
     ''
-    + lib.optional withDesktop ''
-      cp -R ${desktop-app}/** out/
+    + lib.optionals withDesktop ''
+      cp -R ${seanime-desktop}/** out/
     '';
+
+  passthru = {
+    web = seanime-web;
+    server = seanime-server;
+    desktop = seanime-desktop;
+  };
+  passthru.updateScript = nix-update-script {
+    extraArgs = [
+      "--subpackage"
+      "web"
+      "--subpackage"
+      "server"
+      "--subpackage"
+      "desktop"
+    ];
+  };
 
   meta = {
     description = "Open-source media server with a web interface and desktop app for anime and manga";
