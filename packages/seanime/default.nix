@@ -66,7 +66,7 @@ let
       runHook preInstall
 
       mkdir -p $out/web
-      cp -r out $out/web
+      cp -r $src/out $out/web
 
       runHook postInstall
     '';
