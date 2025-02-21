@@ -53,6 +53,7 @@
               waydroid-script = pkgs.callPackage ./packages/waydroid-script { };
               trashy = pkgs.callPackage ./packages/trashy { };
               nu-periodic-table = pkgs.callPackage ./packages/nushell-periodic-table/default.nix { };
+              seanime = pkgs.callPackage ./packages/seanime { withDesktop = true; };
 
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
