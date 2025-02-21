@@ -13,6 +13,7 @@
   openssl,
   webkitgtk_4_0,
   nix-update-script,
+  google-fonts,
   withDesktop ? true,
 }:
 let
@@ -36,6 +37,12 @@ let
     sourceRoot = "${src.name}/seanime-web";
 
     dontNpmBuild = true;
+
+    preBuild = ''
+      cp "${
+        google-fonts.override { fonts = [ "Inter" ]; }
+      }/share/fonts/truetype/Inter[slnt,wght].ttf" src/app/Inter.ttf
+    '';
 
     buildPhase = ''
       runHook preBuild
