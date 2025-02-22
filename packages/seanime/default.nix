@@ -75,6 +75,30 @@ let
     '';
   };
 
+  seanime-server = buildGoModule {
+    pname = "seanime-server";
+
+    inherit src version;
+
+    vendorHash = "sha256-4liG/EB3KcOqUllTbcgFFGB0K473+7ZKfpQa/ODU+EI=";
+
+    preBuild = ''
+      mkdir web
+
+      cp -R ${seanime-web}/web/** web/
+
+      #  .github scripts redeclare main
+      rm -rf .github
+    '';
+
+    doCheck = false;
+
+    ldflags = [
+      "-s"
+      "-w"
+    ];
+  };
+
   seanime-desktop = rustPlatform.buildRustPackage {
     pname = "seanime-desktop";
 
@@ -138,30 +162,6 @@ let
 
     doCheck = false;
   };
-
-  seanime-server = buildGoModule {
-    pname = "seanime-server";
-
-    inherit src version;
-
-    vendorHash = "sha256-4liG/EB3KcOqUllTbcgFFGB0K473+7ZKfpQa/ODU+EI=";
-
-    preBuild = ''
-      mkdir web
-
-      cp -R ${seanime-web}/web/** web/
-
-      #  .github scripts redeclare main
-      rm -rf .github
-    '';
-
-    doCheck = false;
-
-    ldflags = [
-      "-s"
-      "-w"
-    ];
-  };
 in
 stdenvNoCC.mkDerivation {
   inherit pname version src;
@@ -173,8 +173,10 @@ stdenvNoCC.mkDerivation {
       install -Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
     ''
     + lib.optionals withDesktop ''
-      ls ${seanime-desktop}
       cp -R ${seanime-desktop}/** $out/
+
+      wrapProgram $out/bin/seanime-desktop \
+        --prefix PATH : ${lib.makeBinPath seanime-desktop.buildInputs}
     '';
 
   passthru = {
@@ -200,6 +202,7 @@ stdenvNoCC.mkDerivation {
     changelog = "https://github.com/5rahim/seanime/blob/${src.rev}/CHANGELOG.md";
     license = lib.licenses.gpl3Only;
     maintainers = with lib.maintainers; [ daru-san ];
+    platforms = lib.platforms.linux;
     mainProgram = "seanime";
   };
 }
