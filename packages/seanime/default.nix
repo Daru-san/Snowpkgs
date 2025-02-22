@@ -16,6 +16,7 @@
   google-fonts,
   gobject-introspection,
   libappindicator-gtk3,
+  makeWrapper,
   withDesktop ? true,
 }:
 let
@@ -165,6 +166,8 @@ let
 in
 stdenvNoCC.mkDerivation {
   inherit pname version src;
+
+  nativeBuildInputs = [ makeWrapper ];
 
   installPhase =
     ''
