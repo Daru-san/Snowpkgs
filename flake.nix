@@ -54,6 +54,7 @@
               trashy = pkgs.callPackage ./packages/trashy { };
               nu-periodic-table = pkgs.callPackage ./packages/nushell-periodic-table/default.nix { };
               seanime = pkgs.callPackage ./packages/seanime { withDesktop = true; };
+              mtkclient = pkgs.callPackage ./packages/mtkclient { };
 
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
