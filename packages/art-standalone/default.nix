@@ -46,7 +46,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   buildInputs = [
-    bionic-translation
+    bionic-translation.out
     expat
     icu
     libbsd
