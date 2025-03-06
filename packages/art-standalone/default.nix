@@ -18,7 +18,6 @@
   lz4,
   runtimeShell,
   pkg-config,
-  autoreconfHook,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "art-standalone";
@@ -43,7 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     which
     zip
     pkg-config
-    autoreconfHook
   ];
 
   buildInputs = [
