@@ -64,8 +64,8 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   env.NIX_CFLAGS_COMPILE = lib.concatStringsSep " " [
-    "-w"
     "-fsyntax-only"
+    "-Wno-error"
   ];
 
   meta = {
