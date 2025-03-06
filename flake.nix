@@ -42,7 +42,7 @@
             devShells.default = pkgs.mkShellNoCC {
               packages = [ config.packages.snow-updater ];
             };
-            packages = {
+            packages = rec {
               bridge-editor = pkgs.callPackage ./packages/bridge { };
               gh-download = pkgs.callPackage ./packages/gh-download { };
               pokeshell = pkgs.callPackage ./packages/pokeshell { };
@@ -55,6 +55,13 @@
               nu-periodic-table = pkgs.callPackage ./packages/nushell-periodic-table/default.nix { };
               seanime = pkgs.callPackage ./packages/seanime { withDesktop = true; };
               mtkclient = pkgs.callPackage ./packages/mtkclient { };
+              bionic-translation = pkgs.callPackage ./packages/bionic-translation { };
+
+              art-standalone = pkgs.callPackage ./packages/art-standalone { inherit bionic-translation; };
+
+              android-translation-layer = pkgs.callPackage ./packages/android-translation-layer {
+                inherit bionic-translation art-standalone;
+              };
 
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
