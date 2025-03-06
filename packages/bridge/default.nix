@@ -14,7 +14,7 @@
 }:
 let
   pname = "editor";
-  version = "2.7.42";
+  version = "2.7.43";
 
   src = fetchFromGitHub {
     owner = "bridge-core";
