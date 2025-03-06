@@ -67,8 +67,11 @@ stdenv.mkDerivation (finalAttrs: {
     sed -i "s|/bin/bash|${runtimeShell}|" build/core/config.mk build/core/main.mk
   '';
 
-  buildPhase = "make ____LIBDIR=lib";
-  installPhase = "make ____PREFIX=$out ____INSTALL_ETC=$out/etc ____LIBDIR=lib install";
+  makeFlags = [
+    "____LIBDIR=lib"
+    "____PREFIX=${placeholder "out"}"
+    "____INSTALL_ETC=${placeholder "out"}/etc"
+  ];
 
   meta = {
     description = "Art and dependencies with modifications to make it work on Linux";
