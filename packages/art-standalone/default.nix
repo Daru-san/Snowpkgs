@@ -18,6 +18,7 @@
   lz4,
   runtimeShell,
   pkg-config,
+  autoreconfHook,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "art-standalone";
@@ -42,6 +43,7 @@ stdenv.mkDerivation (finalAttrs: {
     which
     zip
     pkg-config
+    autoreconfHook
   ];
 
   buildInputs = [
@@ -66,12 +68,6 @@ stdenv.mkDerivation (finalAttrs: {
   env.NIX_CFLAGS_COMPILE = lib.concatStringsSep " " [
     "-w"
     "-fsyntax-only"
-  ];
-
-  makeFlags = [
-    "____LIBDIR=lib"
-    "____PREFIX=${placeholder "out"}"
-    "____INSTALL_ETC=${placeholder "out"}/etc"
   ];
 
   meta = {
