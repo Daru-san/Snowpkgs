@@ -63,10 +63,8 @@ stdenv.mkDerivation (finalAttrs: {
     sed -i "s|/bin/bash|${runtimeShell}|" build/core/config.mk build/core/main.mk
   '';
 
-  env.NIX_CFLAGS_COMPILE = lib.concatStringsSep " " [
-    "-fsyntax-only"
-    "-Wno-error"
-  ];
+  buildPhase = "make ____LIBDIR=lib";
+  installPhase = "make ____PREFIX=$out ____INSTALL_ETC=$out/etc ____LIBDIR=lib install";
 
   meta = {
     description = "Art and dependencies with modifications to make it work on Linux";
