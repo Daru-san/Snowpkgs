@@ -52,7 +52,9 @@ stdenv.mkDerivation (finalAttrs: {
     libcap
     lz4
     openssl
-    wolfssl
+    (wolfssl.override {
+      extraConfigureFlags = [ "--enable-jni" ];
+    })
     xz
     zlib
   ];
