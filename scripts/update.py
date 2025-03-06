@@ -37,7 +37,7 @@ class Updaters:
 
 ud = Updaters()
 version_pnames = ["bridge-editor", "poketex"]
-branch_pnames = ["valent", "kronkhite", "waydroid-script", "trashy"]
+branch_pnames = ["valent", "kronkhite", "waydroid-script", "trashy", "android-translation-layer","bionic-translation","art-standalone"]
 
 for x in version_pnames:
     ud.update_version(x)
