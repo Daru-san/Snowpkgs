@@ -63,6 +63,8 @@ stdenv.mkDerivation (finalAttrs: {
     sed -i "s|/bin/bash|${runtimeShell}|" build/core/config.mk build/core/main.mk
   '';
 
+  env.NIX_CFLAGS_COMPILE = lib.concatLines [ "-Wno-attributes" ];
+
   makeFlags = [
     "____LIBDIR=lib"
     "____PREFIX=${placeholder "out"}"
