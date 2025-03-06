@@ -14,7 +14,7 @@ python3Packages.buildPythonPackage rec {
     owner = "bkerler";
     repo = "mtkclient";
     rev = version;
-    hash = "sha256-+UU8YI9CYGdZCe8vCoHpl6qR709EFIg6oDDmFN/O0to=";
+    hash = "sha256-y2VCfjds1fN2G9MHYZveT3NQqYF7RO26gBykHY1O6o8=";
   };
 
   pyproject = true;
