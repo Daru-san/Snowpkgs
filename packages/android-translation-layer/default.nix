@@ -27,13 +27,13 @@
 
 stdenv.mkDerivation {
   pname = "android-translation-layer";
-  version = "0-unstable-2025-01-17";
+  version = "0-unstable-2025-03-05";
 
   src = fetchFromGitLab {
     owner = "android_translation_layer";
     repo = "android_translation_layer";
-    rev = "2271ae9c06581ac3dc02102fd0400cad6fe53142";
-    hash = "sha256-jxv+E4C63JLyP8yluZ8xHnUSTli9ahgenw/HAOChPlY=";
+    rev = "819867216be381638c0e0b8876d8d25761e837f6";
+    hash = "sha256-wWvisawFNPvZns618EaH7p1rqK2Z0H8H5K7x3MvYHEg=";
   };
 
   postPatch = ''
@@ -48,11 +48,11 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     pkg-config
-  #  makeWrapper
-  #  patchelf
+    #  makeWrapper
+    #  patchelf
     meson
     ninja
-  #  aapt
+    #  aapt
     cmake
     openjdk17
     dioxus-cli
@@ -60,26 +60,26 @@ stdenv.mkDerivation {
 
   buildInputs = [
     wayland-scanner
-  #  jre
-  #  alsa-lib
+    #  jre
+    #  alsa-lib
     ffmpeg
-  #  capnproto
-  #  xorg_sys_opengl
+    #  capnproto
+    #  xorg_sys_opengl
     glib.dev
     gtk4.dev
     libgudev
     openxr-loader.dev
     libportal-gtk4
     sqlite.dev
-  #  wolfssljni
+    #  wolfssljni
     bionic-translation
     art-standalone
-  #  SkiaSharp
+    #  SkiaSharp
     wayland-protocols
     libglvnd
     libdrm
     webkitgtk_6_0
-  #  libepoxy
+    #  libepoxy
     wayland.dev
   ];
 
@@ -94,11 +94,11 @@ stdenv.mkDerivation {
 
   #installPhase = ''
   #  DESTDIR="$out" MESON_INSTALL_PREFIX="" meson install
-    # mv $out/usr/local/* $out
-    # rm -rf $out/usr
-    #wrapProgram $out/usr/local/bin/android-translation-layer \
-    #  --prefix PATH : #$#{art_standalone}/bin \
-    #  --prefix LD_LIBRARY_PATH : #$#{bionic_translation}/lib:#$#{art_standalone}/lib/art:#$#{art_standalone}/lib/java/dex/art/natives:$out/usr/local/lib:$out/usr/local/lib/java/dex/android_translation_layer/natives:#$#{opensles}/lib
+  # mv $out/usr/local/* $out
+  # rm -rf $out/usr
+  #wrapProgram $out/usr/local/bin/android-translation-layer \
+  #  --prefix PATH : #$#{art_standalone}/bin \
+  #  --prefix LD_LIBRARY_PATH : #$#{bionic_translation}/lib:#$#{art_standalone}/lib/art:#$#{art_standalone}/lib/java/dex/art/natives:$out/usr/local/lib:$out/usr/local/lib/java/dex/android_translation_layer/natives:#$#{opensles}/lib
   #'';
 
   meta = {
