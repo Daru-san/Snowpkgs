@@ -72,8 +72,6 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Art and dependencies with modifications to make it work on Linux";
     homepage = "https://gitlab.com/android_translation_layer/art_standalone";
-    # No license specified yet
-    license = lib.licenses.unfree;
     platforms = lib.platforms.all;
     maintainers = with lib.maintainers; [ onny ];
   };

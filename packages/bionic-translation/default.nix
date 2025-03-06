@@ -64,8 +64,6 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Set of libraries for loading bionic-linked .so files on musl/glibc";
     homepage = "https://gitlab.com/android_translation_layer/bionic_translation";
-    # No license specified yet
-    license = lib.licenses.unfree;
     platforms = lib.platforms.all;
     maintainers = with lib.maintainers; [ onny ];
   };
