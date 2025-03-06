@@ -17,6 +17,7 @@
   libbsd,
   lz4,
   runtimeShell,
+  pkg-config,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "art-standalone";
@@ -40,6 +41,7 @@ stdenv.mkDerivation (finalAttrs: {
     python3
     which
     zip
+    pkg-config
   ];
 
   buildInputs = [
