@@ -21,13 +21,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "art-standalone";
-  version = "0-unstable-2025-01-15";
+  version = "0-unstable-2025-03-05";
 
   src = fetchFromGitLab {
     owner = "android_translation_layer";
     repo = "art_standalone";
-    rev = "aa709f68d03e83d35c5e8a58e77760e5be9185bc";
-    hash = "sha256-YNAXbtcaZHWaFPbJ+wUFfuHAwU3HrwF6tx6lQzlkWZA=";
+    rev = "c159b1618e01221ac05811f37743a786c46e68fc";
+    hash = "sha256-WmvudYCntfmUoNA6qWLcCscUK4Wb0Soojqnz7F0YL3A=";
   };
 
   patches = [ ./add-liblog-dep.patch ];
