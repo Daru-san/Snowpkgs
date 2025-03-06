@@ -12,6 +12,7 @@
   icu,
   zlib,
   libcap,
+  libpng,
   expat,
   openssl,
   libbsd,
@@ -50,6 +51,7 @@ stdenv.mkDerivation (finalAttrs: {
     icu
     libbsd
     libcap
+    libpng
     lz4
     openssl
     (wolfssl.override {
