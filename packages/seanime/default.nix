@@ -21,13 +21,13 @@
 }:
 let
   pname = "seanime";
-  version = "2.7.4";
+  version = "2.7.5";
 
   src = fetchFromGitHub {
     owner = "5rahim";
     repo = "seanime";
     rev = "v${version}";
-    hash = "sha256-aLKiUmT37pst2XoK+v84vcOtFT8VSdHrKlDekdKapJ4=";
+    hash = "sha256-W3M4n+NZJRHFieeeMAKMJz8fI5kWT3M6CiFhLLNSMDM=";
   };
 
   seanime-web = buildNpmPackage {
@@ -81,7 +81,7 @@ let
 
     inherit src version;
 
-    vendorHash = "sha256-4liG/EB3KcOqUllTbcgFFGB0K473+7ZKfpQa/ODU+EI=";
+    vendorHash = "sha256-He2ECCOTngnxibNS0llgMfa2J9/x6qEWrQ/VlB6x/tk=";
 
     preBuild = ''
       mkdir web
@@ -107,7 +107,7 @@ let
 
     sourceRoot = "${src.name}/seanime-desktop/src-tauri";
 
-    cargoHash = "sha256-Hs+IYhZ3Aw8jPJbo9i2/wFQzViueBdOTkj5P996W5pU=";
+    cargoHash = "sha256-m9MjJxqfL9JdelV+V9zF4G5vKqbY97d+FHN+Di1GBMs=";
 
     nativeBuildInputs = [
       cargo-tauri
