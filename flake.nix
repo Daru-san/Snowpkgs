@@ -56,6 +56,7 @@
               seanime = pkgs.callPackage ./packages/seanime { withDesktop = true; };
               mtkclient = pkgs.callPackage ./packages/mtkclient { };
               bionic-translation = pkgs.callPackage ./packages/bionic-translation { };
+              tanuki3ds = pkgs.callPackage ./packages/tanuki3ds { };
 
               art-standalone = pkgs.callPackage ./packages/art-standalone { inherit bionic-translation; };
 
