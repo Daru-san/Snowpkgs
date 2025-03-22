@@ -29,9 +29,22 @@ stdenv.mkDerivation rec {
   buildPhase = ''
     runHook preBuild
 
-    lazbuild pasls.lpi
+    export HOME=$(mktemp -d)
+
+    lazbuild pasls.lpi --lazarusdir=${lazarus}/share/lazarus
 
     runHook postBuild
+  '';
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/bin
+
+    install -Dm775 /build/source/server/pasls $out/bin/pasls
+
+
+    runHook postInstall
   '';
 
   meta = {
