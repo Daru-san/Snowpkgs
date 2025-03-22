@@ -33,8 +33,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   patches = [ ./add-liblog-dep.patch ];
 
-  enableParallelBuilding = true;
-
   strictDeps = true;
 
   nativeBuildInputs = [
