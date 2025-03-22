@@ -57,6 +57,7 @@
               mtkclient = pkgs.callPackage ./packages/mtkclient { };
               bionic-translation = pkgs.callPackage ./packages/bionic-translation { };
               tanuki3ds = pkgs.callPackage ./packages/tanuki3ds { };
+              palsp = pkgs.callPackage ./packages/palsp { };
 
               art-standalone = pkgs.callPackage ./packages/art-standalone { inherit bionic-translation; };
 
