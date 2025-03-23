@@ -59,6 +59,7 @@
               tanuki3ds = pkgs.callPackage ./packages/tanuki3ds { };
               palsp = pkgs.callPackage ./packages/palsp { };
               pasls = pkgs.callPackage ./packages/pasls { };
+              jcf-pascal-format = pkgs.callPackage ./packages/jcf-pascal-format { };
 
               art-standalone = pkgs.callPackage ./packages/art-standalone { inherit bionic-translation; };
 
