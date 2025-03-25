@@ -14,8 +14,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "anametologin";
     repo = "krohnkite";
-    rev = "80ee963852e377425b949462c8fa5a9d4002be60";
-    hash = "sha256-Upw2f5Knzef4WwZFuhfPDqG/iasYRnaNjPBsfw/JqbM=";
+    rev = "a70bb9a74f08c9af698a61922cb012f8826421c5";
+    hash = "sha256-svA7Fn8Wa02LXIhBFOGOdLPMr5kpPC49mIzVH7tuBwc=";
   };
 
   buildInputs = with libsForQt5; [
