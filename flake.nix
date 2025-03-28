@@ -66,6 +66,7 @@
               android-translation-layer = pkgs.callPackage ./packages/android-translation-layer {
                 inherit bionic-translation art-standalone;
               };
+              xbyak = pkgs.callPackage ./packages/xbyak/xbyak.nix { };
 
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
