@@ -2,8 +2,14 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  clangStdenv,
   clang,
+  sdl3,
+  xxHash,
+  cglm,
+  fdk_aac,
+  capstone,
+  xbyak,
+  xbyak-aarch64,
 }:
 
 stdenv.mkDerivation rec {
@@ -19,11 +25,20 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ clang ];
 
+  buildInputs = [
+    sdl3
+    cglm
+    xxHash
+    fdk_aac
+    capstone
+    xbyak
+  ];
+
   meta = {
     description = "3DS Emulator";
     homepage = "https://github.com/burhanr13/Tanuki3DS";
     license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = with lib.maintainers; [ daru-san ];
     mainProgram = "tanuki3-ds";
     platforms = lib.platforms.all;
   };

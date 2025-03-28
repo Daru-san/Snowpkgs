@@ -56,7 +56,6 @@
               seanime = pkgs.callPackage ./packages/seanime { withDesktop = true; };
               mtkclient = pkgs.callPackage ./packages/mtkclient { };
               bionic-translation = pkgs.callPackage ./packages/bionic-translation { };
-              tanuki3ds = pkgs.callPackage ./packages/tanuki3ds { };
               palsp = pkgs.callPackage ./packages/palsp { };
               pasls = pkgs.callPackage ./packages/pasls { };
               jcf-pascal-format = pkgs.callPackage ./packages/jcf-pascal-format { };
@@ -68,6 +67,8 @@
               };
               xbyak = pkgs.callPackage ./packages/xbyak/xbyak.nix { };
               xbyak-aarch64 = pkgs.callPackage ./packages/xbyak/xbyak-aarch64.nix { };
+
+              tanuki3ds = pkgs.callPackage ./packages/tanuki3ds { inherit xbyak xbyak-aarch64; };
 
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
