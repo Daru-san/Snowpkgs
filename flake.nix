@@ -67,6 +67,7 @@
                 inherit bionic-translation art-standalone;
               };
               xbyak = pkgs.callPackage ./packages/xbyak/xbyak.nix { };
+              xbyak-aarch64 = pkgs.callPackage ./packages/xbyak/xbyak-aarch64.nix { };
 
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
