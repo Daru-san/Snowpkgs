@@ -107,7 +107,7 @@ let
 
     sourceRoot = "${src.name}/seanime-desktop/src-tauri";
 
-    cargoHash = "sha256-m9MjJxqfL9JdelV+V9zF4G5vKqbY97d+FHN+Di1GBMs=";
+    cargoHash = "sha256-a2Y7NZiJg1F4dt01WZhldwI4zv5SoaxtfLJJB8aEldc=";
 
     nativeBuildInputs = [
       cargo-tauri
