@@ -14,13 +14,13 @@
 }:
 let
   pname = "editor";
-  version = "2.7.44";
+  version = "2.7.45";
 
   src = fetchFromGitHub {
     owner = "bridge-core";
     repo = "editor";
     rev = "v${version}";
-    hash = "sha256-oiZpuH12Xw/EMBTxiqvezjFasbmKelWT+KN7bL67m7Q=";
+    hash = "sha256-5pj8jlN25n1ZARsbC8iEZ9C8ELrmiepfz1+zteaRlxM=";
   };
 
   frontend = buildNpmPackage {
@@ -70,7 +70,7 @@ rustPlatform.buildRustPackage {
 
   sourceRoot = "${src.name}/src-tauri";
 
-  cargoHash = "sha256-ZtXUmEoMVoHhdbkCjtNmAPDYR4FHjTXz6ZIRj+QUDq0=";
+  cargoHash = "sha256-6PeADDLgBbD7ReZeSIimRBPOxKhe1cjLwnYpSoCetME=";
 
   nativeBuildInputs = [
     wrapGAppsHook3
