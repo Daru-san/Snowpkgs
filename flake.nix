@@ -74,6 +74,7 @@
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
 
               hydepanel = pkgs.callPackage ./packages/hydepanel {};
+              py-build-cmake= pkgs.callPackage ./packages/py-build-cmake { };
 
               # elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
