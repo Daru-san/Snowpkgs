@@ -4,11 +4,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    fabric.url = "github:Fabric-Development/fabric";
   };
 
   outputs =
     inputs@{
       flake-parts,
+      fabric,
       nixpkgs,
       self,
       ...
@@ -73,11 +75,14 @@
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
 
-              hydepanel = pkgs.callPackage ./packages/hydepanel {};
               rlottie-python = pkgs.callPackage ./packages/rlottie-python { inherit py-build-cmake; };
 
               py-build-cmake= pkgs.callPackage ./packages/py-build-cmake { };
 
+              hydepanel = pkgs.callPackage ./packages/hydepanel {
+                fabric = inputs.fabric.packages.${pkgs.system}.default;
+                inherit rlottie-python;
+              };
               # elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
             };

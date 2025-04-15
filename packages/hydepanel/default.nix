@@ -1,6 +1,6 @@
 {
   lib,
-  python3,
+  python312Packages,
   fetchFromGitHub,
   networkmanager,
   pipewire,
@@ -12,13 +12,14 @@
   hypridle,
   hyprsunset,
   playerctl,
-  writeShellScript,
   makeWrapper,
+  fabric,
+  wrapGAppsHook,
+  gtk3,
+  gobject-introspection,
+  rlottie-python,
 }:
-let
-  start-script = writeShellScript "start.sh" '''';
-in
-python3.pkgs.buildPythonApplication rec {
+python312Packages.buildPythonApplication rec {
   pname = "hydepanel";
   version = "0.7.2";
   format = "other";
@@ -32,6 +33,8 @@ python3.pkgs.buildPythonApplication rec {
 
   nativeBuildInputs = [
     makeWrapper
+    wrapGAppsHook
+    gobject-introspection
   ];
 
   buildInputs = [
@@ -45,16 +48,19 @@ python3.pkgs.buildPythonApplication rec {
     hypridle
     hyprsunset
     playerctl
-  ];
+    gtk3
+  ] ++ fabric.buildInputs;
 
   buildPhase = ''
     runHook preBuild
 
-    mkdir -p $out/share/hydepanel
+    mkdir -p $out/bin
 
-    cp -r $src/{assets,modules,services,shared,styles,utils,widgets,main.py} $out/share/hydepanel
+    cp -r $src/{assets,modules,services,shared,styles,utils,widgets,main.py,config.json,hydepanel.schema.json} $out/bin/
 
-    patchShebangs $out/share/hydepanel/assets/scripts/*.sh
+    patchShebangs $out/bin/assets/scripts/*.sh
+
+    sed -i '1i#!/usr/bin/env python3' $out/bin/main.py
 
     runHook postBuild
   '';
@@ -62,18 +68,12 @@ python3.pkgs.buildPythonApplication rec {
   installPhase = ''
     runHook preInstall
 
-    install -Dm775 ${start-script} $out/bin/hydepanel
+    install -Dm775 $out/bin/main.py $out/bin/hydepanel
 
-    MAINPY=$out/hydepanel/share/main.py
-
-    echo "python3 $MAINPY" >> $out/bin/hydepanel
-
-    wrapProgram $out/bin/hydepanel \
+    wrapProgram $out/bin/${pname} \
       --prefix PATH : ${
         with lib;
         makeBinPath (flatten [
-          dependencies
-          python3
           buildInputs
         ])
       }
@@ -81,22 +81,31 @@ python3.pkgs.buildPythonApplication rec {
     runHook postInstall
   '';
 
-  dependencies = with python3.pkgs; [
-    click
-    dbus-python
-    fabric
-    loguru
-    psutil
-    pycairo
-    pygobject3
-    setproctitle
-  ];
+  dependencies =
+    [
+      rlottie-python
+      (fabric.override {
+        inherit python312Packages;
+      })
+    ]
+    ++ (with python312Packages; [
+      click
+      dbus-python
+      loguru
+      psutil
+      pycairo
+      pygobject3
+      setproctitle
+      utils
+      pyjson5
+      pytomlpp
+    ]);
 
   meta = {
     description = "Modular panel written on fabric";
     homepage = "https://github.com/rubiin/HyDePanel";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ ];
+    maintainers = with lib.maintainers; [ daru-san ];
     mainProgram = "hydepanel";
   };
 }
