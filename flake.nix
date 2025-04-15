@@ -73,6 +73,8 @@
               # Waiting for upstream to update tauri version with next release
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
 
+              hydepanel = pkgs.callPackage ./packages/hydepanel {};
+
               # elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
             };
