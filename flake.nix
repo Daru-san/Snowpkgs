@@ -74,6 +74,8 @@
               rqbit-testing = pkgs.callPackage ./packages/rqbit { };
 
               hydepanel = pkgs.callPackage ./packages/hydepanel {};
+              rlottie-python = pkgs.callPackage ./packages/rlottie-python { inherit py-build-cmake; };
+
               py-build-cmake= pkgs.callPackage ./packages/py-build-cmake { };
 
               # elia = pkgs.callPackage ./packages/elia { };
