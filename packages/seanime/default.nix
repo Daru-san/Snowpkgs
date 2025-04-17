@@ -35,7 +35,7 @@ let
 
     inherit version src;
 
-    npmDepsHash = "sha256-9qyHaOJQFO0jquKpXUusznfGCaeU3LCSPiCzTdKl20Y=";
+    npmDepsHash = "sha256-jsTyksbmLsC1CyGFDk4EUrkEoSYzZQ3gV/OJoqhUAGI=";
 
     sourceRoot = "${src.name}/seanime-web";
 
@@ -81,7 +81,7 @@ let
 
     inherit src version;
 
-    vendorHash = "sha256-He2ECCOTngnxibNS0llgMfa2J9/x6qEWrQ/VlB6x/tk=";
+    vendorHash = "sha256-9cLG2Wygh6aqmFpApNrzwoGZF29S7Z4dUtgC0U7/OGc=";
 
     preBuild = ''
       mkdir web
@@ -107,7 +107,7 @@ let
 
     sourceRoot = "${src.name}/seanime-desktop/src-tauri";
 
-    cargoHash = "sha256-a2Y7NZiJg1F4dt01WZhldwI4zv5SoaxtfLJJB8aEldc=";
+    cargoHash = "sha256-rUSugriXI0NIjwSEAeekxcdMv/3qqNuBcEPhp1hpgCU=";
 
     nativeBuildInputs = [
       cargo-tauri
