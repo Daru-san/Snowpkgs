@@ -21,13 +21,13 @@
 }:
 let
   pname = "seanime";
-  version = "2.7.5";
+  version = "2.8.1";
 
   src = fetchFromGitHub {
     owner = "5rahim";
     repo = "seanime";
     rev = "v${version}";
-    hash = "sha256-W3M4n+NZJRHFieeeMAKMJz8fI5kWT3M6CiFhLLNSMDM=";
+    hash = "sha256-f3hn6RNWMv6imIoTxJlnBBlTxEc/HADzFcnQ25xcQZU=";
   };
 
   seanime-web = buildNpmPackage {
