@@ -70,7 +70,7 @@ rustPlatform.buildRustPackage {
 
   sourceRoot = "${src.name}/src-tauri";
 
-  cargoHash = "sha256-6PeADDLgBbD7ReZeSIimRBPOxKhe1cjLwnYpSoCetME=";
+  cargoHash = "sha256-/VgQQUgGeTsqnwqT7ku9Zgi+AtYXXomYD5kpc1StZvA=";
 
   nativeBuildInputs = [
     wrapGAppsHook3
