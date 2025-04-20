@@ -21,13 +21,13 @@
 }:
 let
   pname = "seanime";
-  version = "2.8.1";
+  version = "2.8.2";
 
   src = fetchFromGitHub {
     owner = "5rahim";
     repo = "seanime";
     rev = "v${version}";
-    hash = "sha256-f3hn6RNWMv6imIoTxJlnBBlTxEc/HADzFcnQ25xcQZU=";
+    hash = "sha256-9m1fW12D24nNN0NA0/Lgj+w0i3BrThChS1cAQuimrhw=";
   };
 
   seanime-web = buildNpmPackage {
@@ -81,7 +81,7 @@ let
 
     inherit src version;
 
-    vendorHash = "sha256-9cLG2Wygh6aqmFpApNrzwoGZF29S7Z4dUtgC0U7/OGc=";
+    vendorHash = "sha256-TeEPAzVb8g5ONSKvsfe9IVHf9sri9xqqsR+yYFW9wc4=";
 
     preBuild = ''
       mkdir web
@@ -171,16 +171,24 @@ stdenvNoCC.mkDerivation {
 
   installPhase =
     ''
+      runHook preInstall
+
       mkdir -p $out/bin
 
       install -Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
     ''
     + lib.optionals withDesktop ''
+      install -Dm644 ${./icon.svg} $out/share/icons/hicolor/scalable/apps/seanime.svg
+
       cp -R ${seanime-desktop}/** $out/
 
       wrapProgram $out/bin/seanime-desktop \
         --prefix PATH : ${lib.makeBinPath seanime-desktop.buildInputs}
+
+      runHook postInstall
     '';
+
+  desktopItems = [ desktopEntry ];
 
   passthru = {
     web = seanime-web;
