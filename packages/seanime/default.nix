@@ -17,6 +17,8 @@
   gobject-introspection,
   libappindicator-gtk3,
   makeWrapper,
+  makeDesktopItem,
+  copyDesktopItems,
   withDesktop ? true,
 }:
 let
@@ -163,11 +165,23 @@ let
 
     doCheck = false;
   };
+
+  desktopEntry = makeDesktopItem {
+    name = "seanime";
+    type = "Application";
+    desktopName = "Seanime Desktop";
+    comment = "Open-source media server with a web interface";
+    icon = "seanime";
+    terminal = false;
+  };
 in
 stdenvNoCC.mkDerivation {
   inherit pname version src;
 
-  nativeBuildInputs = [ makeWrapper ];
+  nativeBuildInputs = [
+    makeWrapper
+    copyDesktopItems
+  ];
 
   installPhase =
     ''
