@@ -179,6 +179,7 @@ rustPlatform.buildRustPackage {
     homepage = "https://github.com/ikatson/rqbit";
     changelog = "https://github.com/ikatson/rqbit/releases/tag/v${version}";
     license = licenses.asl20;
+    broken = true;
     maintainers = with maintainers; [
       cafkafk
       toasteruwu

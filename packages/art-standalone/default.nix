@@ -76,5 +76,6 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://gitlab.com/android_translation_layer/art_standalone";
     platforms = lib.platforms.all;
     maintainers = with lib.maintainers; [ onny ];
+    broken = true;
   };
 })
