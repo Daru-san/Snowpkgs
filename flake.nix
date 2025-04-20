@@ -62,27 +62,30 @@
               pasls = pkgs.callPackage ./packages/pasls { };
               jcf-pascal-format = pkgs.callPackage ./packages/jcf-pascal-format { };
 
-              art-standalone = pkgs.callPackage ./packages/art-standalone { inherit bionic-translation; };
-
-              android-translation-layer = pkgs.callPackage ./packages/android-translation-layer {
-                inherit bionic-translation art-standalone;
-              };
+              # art-standalone = pkgs.callPackage ./packages/art-standalone { inherit bionic-translation; };
+              #
+              # android-translation-layer = pkgs.callPackage ./packages/android-translation-layer {
+              #   inherit bionic-translation art-standalone;
+              # };
               xbyak = pkgs.callPackage ./packages/xbyak/xbyak.nix { };
               xbyak-aarch64 = pkgs.callPackage ./packages/xbyak/xbyak-aarch64.nix { };
 
               tanuki3ds = pkgs.callPackage ./packages/tanuki3ds { inherit xbyak xbyak-aarch64; };
 
-              # Waiting for upstream to update tauri version with next release
-              rqbit-testing = pkgs.callPackage ./packages/rqbit { };
+              # # Waiting for upstream to update tauri version with next release
+              # rqbit-testing = pkgs.callPackage ./packages/rqbit { };
 
               rlottie-python = pkgs.callPackage ./packages/rlottie-python { inherit py-build-cmake; };
 
-              py-build-cmake= pkgs.callPackage ./packages/py-build-cmake { };
+              py-build-cmake = pkgs.callPackage ./packages/py-build-cmake { };
 
               hydepanel = pkgs.callPackage ./packages/hydepanel {
                 fabric = inputs.fabric.packages.${pkgs.system}.default;
                 inherit rlottie-python;
               };
+
+              clipse-gui = pkgs.callPackage ./packages/clipse-gui { };
+
               # elia = pkgs.callPackage ./packages/elia { };
               snow-updater = pkgs.callPackage ./scripts/default.nix { };
             };
