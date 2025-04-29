@@ -37,7 +37,7 @@ let
 
     inherit version src;
 
-    npmDepsHash = "sha256-jsTyksbmLsC1CyGFDk4EUrkEoSYzZQ3gV/OJoqhUAGI=";
+    npmDepsHash = "sha256-wwRQpr+czJ225RReGLy/EqLa9Hqn6VlLDmI78U09HiE=";
 
     sourceRoot = "${src.name}/seanime-web";
 
