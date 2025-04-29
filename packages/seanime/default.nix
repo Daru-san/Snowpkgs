@@ -170,8 +170,11 @@ let
     name = "seanime";
     type = "Application";
     desktopName = "Seanime Desktop";
+    genericName = "Media server";
     comment = "Open-source media server with a web interface";
     icon = "seanime";
+    categories = "Media";
+    Exec = "seanime-desktop %U";
     terminal = false;
   };
 in
