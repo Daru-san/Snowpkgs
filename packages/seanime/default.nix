@@ -174,7 +174,7 @@ let
     comment = "Open-source media server with a web interface";
     icon = "seanime";
     categories = "Media";
-    Exec = "seanime-desktop %U";
+    exec = "seanime-desktop %U";
     terminal = false;
   };
 in
