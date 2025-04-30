@@ -173,7 +173,7 @@ let
     genericName = "Media server";
     comment = "Open-source media server with a web interface";
     icon = "seanime";
-    categories = "Media";
+    categories = [ "Media" ];
     exec = "seanime-desktop %U";
     terminal = false;
   };
