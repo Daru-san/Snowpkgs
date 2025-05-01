@@ -19,9 +19,27 @@ os.chdir(gitRootDir)
 
 class Updaters:
     def update_version(self, pname):
-        subprocess.run(["nix-update", "-F", pname, "--commit", "--format"])
+        if pname == "seanime":
+            subprocess.run(
+                [
+                    "nix-update",
+                    "-F",
+                    pname,
+                    "--subpackage",
+                    "web",
+                    "--subpackage",
+                    "server",
+                    "--subpackage",
+                    "desktop",
+                    "--commit",
+                    "--format",
+                ]
+            )
+        else:
+            subprocess.run(["nix-update", "-F", pname, "--commit", "--format"])
 
     def update_branch(self, pname):
+
         subprocess.run(
             [
                 "nix-update",
