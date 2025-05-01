@@ -129,6 +129,8 @@ let
     postPatch = ''
       substituteInPlace ./tauri.conf.json \
         --replace-quiet '"frontendDist": "../../web-desktop",' '"frontendDist": "web-desktop",' \
+      substituteInPlace $cargoDepsCopy/libappindicator-sys-*/src/lib.rs \
+        --replace-fail "libayatana-appindicator3.so.1" "${libayatana-appindicator}/lib/libayatana-appindicator3.so.1"
     '';
 
     TEST_DATADIR = "";
