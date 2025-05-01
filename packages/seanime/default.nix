@@ -15,10 +15,10 @@
   nix-update-script,
   google-fonts,
   gobject-introspection,
-  libappindicator-gtk3,
   makeWrapper,
   makeDesktopItem,
   copyDesktopItems,
+  libayatana-appindicator,
   withDesktop ? true,
 }:
 let
@@ -123,7 +123,7 @@ let
       openssl
       webkitgtk_4_1
       gobject-introspection
-      libappindicator-gtk3
+      libayatana-appindicator
     ];
 
     postPatch = ''
