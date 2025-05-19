@@ -211,7 +211,7 @@ stdenvNoCC.mkDerivation {
       runHook postInstall
     '';
 
-  desktopItems = [ desktopEntry ];
+  desktopItems = lib.optionals withDesktop [ desktopEntry ];
 
   passthru = {
     web = seanime-web;
