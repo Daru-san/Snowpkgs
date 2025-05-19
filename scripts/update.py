@@ -54,7 +54,7 @@ class Updaters:
 
 
 ud = Updaters()
-version_pnames = ["bridge-editor", "poketex", "seanime"]
+version_pnames = ["bridge-editor", "poketex", "seanime", "clipse-gui"]
 branch_pnames = [
     "valent",
     "kronkhite",
