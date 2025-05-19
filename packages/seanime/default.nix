@@ -200,7 +200,7 @@ stdenvNoCC.mkDerivation {
 
       install -Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
     ''
-    + lib.optionals withDesktop ''
+    + lib.optionalString withDesktop ''
       install -Dm644 ${./icon.svg} $out/share/icons/hicolor/scalable/apps/seanime.svg
 
       cp -R ${seanime-desktop}/** $out/
