@@ -30,9 +30,9 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "andyholmes";
     repo = "valent";
-    rev = "0ccf287f82c9dd181f1d192cd4f82f3dd3f3d149";
+    rev = "b52578531f58f72fde4de41a79e56578183353c5";
     fetchSubmodules = true;
-    hash = "sha256-78RlE8Te732mbsD4q4S1pH9sBw7kild6wIf7Z30def8=";
+    hash = "sha256-kv5Wanbw82kgikD4K22Ffq/qH68ENCCdyGJ5nFjn6ak=";
   };
 
   nativeBuildInputs = [
