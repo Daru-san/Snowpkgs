@@ -19,7 +19,7 @@
   makeDesktopItem,
   copyDesktopItems,
   libayatana-appindicator,
-  withDesktop ? true,
+  withDesktop ? false,
 }:
 let
   pname = "seanime";
