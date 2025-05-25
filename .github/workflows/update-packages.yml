@@ -14,13 +14,10 @@ jobs:
         uses: cachix/install-nix-action@v20
       - uses: DeterminateSystems/magic-nix-cache-action@v6
       - name: Update flake packages
-        run: nix develop --command snow-updater
-        shell: bash
-        env:
-          GIT_AUTHOR_NAME: github-actions[bot]
-          GIT_AUTHOR_EMAIL: github-actions[bot]@users.noreply.github.com
-          GIT_COMMITTER_NAME: github-actions[bot]
-          GIT_COMMITTER_EMAIL: github-actions[bot]@users.noreply.github.com
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          nix develop --command snow-updater
       - name: Create PR
         id: create-pr
         uses: peter-evans/create-pull-request@v4
