@@ -9,14 +9,14 @@
 
 python3.pkgs.buildPythonApplication rec {
   pname = "clipse-gui";
-  version = "0.1.1";
+  version = "0.1.4";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "d7omdev";
     repo = "clipse-gui";
     rev = "v${version}";
-    hash = "sha256-7UnlGDPNycdTxpm/fXT6bFJU8U2UGqLgmspNukaFdWk=";
+    hash = "sha256-bh5QlmQUJ0qGVOGsWW0j3zvnYvAR9flfYXsG+6d0fso=";
   };
 
   build-system = [
