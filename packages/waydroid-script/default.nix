@@ -14,13 +14,13 @@ in
 stdenvNoCC.mkDerivation rec {
   name = "waydroid_script";
 
-  version = "0-unstable-2025-07-04";
+  version = "0-unstable-2025-07-11";
 
   src = fetchFromGitHub {
     owner = "casualsnek";
     repo = "waydroid_script";
-    rev = "6f44d95070cd8a767f528ef3e2ed73a34ccb2a6a";
-    hash = "sha256-AiSkFcliCAmTUkGxejcJyYjotDooWxol+1LfVbEDKcY=";
+    rev = "5527d390ebf313f10c2600635708d21846620ac3";
+    hash = "sha256-6CXe+vAbxD02Nwn8nidXj5VhSsh49sulxNljwoUhCzI=";
   };
 
   buildInputs = [
