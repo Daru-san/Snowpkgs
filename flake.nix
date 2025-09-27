@@ -62,6 +62,7 @@
               palsp = pkgs.callPackage ./packages/palsp { };
               pasls = pkgs.callPackage ./packages/pasls { };
               jcf-pascal-format = pkgs.callPackage ./packages/jcf-pascal-format { };
+              onetagger = pkgs.callPackage ./packages/onetagger { };
 
               # art-standalone = pkgs.callPackage ./packages/art-standalone { inherit bionic-translation; };
               #
