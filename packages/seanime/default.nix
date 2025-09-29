@@ -19,6 +19,7 @@
   makeDesktopItem,
   copyDesktopItems,
   libayatana-appindicator,
+  nodejs_24,
   withDesktop ? false,
 }:
 let
@@ -37,15 +38,21 @@ let
 
     inherit version src;
 
-    npmDepsHash = "sha256-CZckoBRms6u6PUS29E9UAM0LvdEjAS8uLSJvoJctPrQ=";
+    npmDepsHash = "sha256-tIDXHcK+LE8FxtUrvn9TEqrsJPb7SneIbvVakppPMSY=";
 
     sourceRoot = "${src.name}/seanime-web";
 
     dontNpmBuild = true;
 
-    patchPhase = ''
-      runHook prePatch
+    nodejs = nodejs_24;
 
+    npmBuildScript = "build:desktop";
+
+    makeCacheWritable = true;
+
+    npmFlags = [ "--legacy-peer-deps" ];
+
+    postPatch = ''
       mkdir -p src/
 
       cp "${
@@ -56,15 +63,7 @@ let
         --replace-quiet 'import { Inter } from "next/font/google"' 'import localFont from "next/font/local"' \
         --replace-quiet 'const inter = Inter({ subsets: ["latin"] })' 'const inter = localFont({ src: "./Inter.ttf" })'
 
-      runHook postPatch
-    '';
-
-    buildPhase = ''
-      runHook preBuild
-
-      npm run build
-
-      runHook postBuild
+      cat ${./package-lock.json} > package-lock.json
     '';
 
     installPhase = ''
@@ -163,7 +162,7 @@ let
 
         cp -R ${web-desktop}/web/* web-desktop
 
-        cp ${seanime-server}/bin/seanime binaries/seanime-x86_64-unknown-linux-gnu
+        ln -nfs ${seanime-server}/bin/seanime binaries/seanime-x86_64-unknown-linux-musl
       '';
 
     doCheck = false;
@@ -192,24 +191,23 @@ stdenvNoCC.mkDerivation {
     copyDesktopItems
   ];
 
-  installPhase =
-    ''
-      runHook preInstall
+  installPhase = ''
+    runHook preInstall
 
-      mkdir -p $out/bin
+    mkdir -p $out/bin
 
-      install -Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
-    ''
-    + lib.optionalString withDesktop ''
-      install -Dm644 ${./icon.svg} $out/share/icons/hicolor/scalable/apps/seanime.svg
+    install -Dm775 ${seanime-server}/bin/seanime $out/bin/seanime
+  ''
+  + lib.optionalString withDesktop ''
+    install -Dm644 ${./icon.svg} $out/share/icons/hicolor/scalable/apps/seanime.svg
 
-      cp -R ${seanime-desktop}/** $out/
+    cp -R ${seanime-desktop}/** $out/
 
-      wrapProgram $out/bin/seanime-desktop \
-        --prefix PATH : ${lib.makeBinPath seanime-desktop.buildInputs}
+    wrapProgram $out/bin/seanime-desktop \
+      --prefix PATH : ${lib.makeBinPath seanime-desktop.buildInputs}
 
-      runHook postInstall
-    '';
+    runHook postInstall
+  '';
 
   desktopItems = lib.optionals withDesktop [ desktopEntry ];
 
