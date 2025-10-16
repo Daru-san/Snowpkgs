@@ -25,14 +25,14 @@
 }:
 stdenv.mkDerivation rec {
   pname = "valent";
-  version = "1.0.0.alpha.48-unstable-2025-09-27";
+  version = "1.0.0.alpha.48-unstable-2025-10-15";
 
   src = fetchFromGitHub {
     owner = "andyholmes";
     repo = "valent";
-    rev = "d7a6acde33c3fa852741ed6ff469ab5a319b7bae";
+    rev = "613e6c702e226272664e69465c339243884ce039";
     fetchSubmodules = true;
-    hash = "sha256-SHXuddZVarBalNL59JEDTNwXD0h66vpQLtLeC+wXTog=";
+    hash = "sha256-r3vNxtaAgdokZFFYFOTghRoyot35RL4Yj1wxQVoKmD8=";
   };
 
   nativeBuildInputs = [
